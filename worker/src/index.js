@@ -38,8 +38,11 @@ ${text}
 </texte>`;
 }
 
+// Origines autorisées par défaut (utilisées si la variable ALLOWED_ORIGINS n'est pas définie)
+const DEFAULT_ORIGINS = "https://minionese.endam-digital.com,https://endam-creator.github.io,http://localhost:8080";
+
 function corsHeaders(origin, env) {
-  const allowed = (env.ALLOWED_ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
+  const allowed = (env.ALLOWED_ORIGINS || DEFAULT_ORIGINS).split(",").map(s => s.trim()).filter(Boolean);
   const ok = allowed.includes(origin);
   return {
     ok,

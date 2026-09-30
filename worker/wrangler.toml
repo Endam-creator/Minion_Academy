@@ -9,7 +9,7 @@ routes = [
 
 [vars]
 # Origines autorisées à appeler le traducteur (virgules, sans slash final)
-ALLOWED_ORIGINS = "https://minionese.endam-digital.com,http://localhost:8080"
+ALLOWED_ORIGINS = "https://minionese.endam-digital.com,https://endam-creator.github.io,http://localhost:8080"
 MODEL = "claude-haiku-4-5-20251001"
 
 # 10 traductions par minute et par IP
