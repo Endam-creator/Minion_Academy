@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minionese Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --banane:#FFC91F; --banane-clair:#FFE382;
+  --denim:#34518C; --denim-fonce:#233A66; --nuit:#14213D;
+  --gelato:#FF8FA3; --blanc:#FFFDF5; --vert:#4CAF50; --rouge:#D9534F;
+  --r:22px;
+  --display:'Fredoka','Arial Rounded MT Bold',system-ui,sans-serif;
+  --body:'Nunito',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--banane);color:var(--nuit);min-height:100vh}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--denim);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---------- NAV ---------- */
+nav{position:sticky;top:0;z-index:50;background:var(--nuit);color:var(--blanc);
+  display:flex;align-items:center;gap:6px;padding:10px 16px;flex-wrap:wrap}
+nav .logo{font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--banane);
+  margin-right:auto;display:flex;align-items:center;gap:8px}
+nav .logo .mini-goggle{width:24px;height:24px;border-radius:50%;background:#e8e8e8;
+  border:4px solid #9aa0a6;display:inline-flex;align-items:center;justify-content:center}
+nav .logo .mini-goggle::after{content:'';width:8px;height:8px;border-radius:50%;background:#5b3a1e}
+nav button.tab{background:transparent;border:2px solid transparent;color:var(--blanc);
+  font-weight:800;font-size:.9rem;padding:7px 13px;border-radius:999px;transition:background .15s}
+nav button.tab:hover{background:rgba(255,255,255,.12)}
+nav button.tab.active{background:var(--banane);color:var(--nuit)}
+.banana-counter{background:var(--denim);border-radius:999px;padding:6px 13px;font-weight:800;
+  display:flex;align-items:center;gap:6px;font-size:.92rem}
+
+/* ---------- PAGES ---------- */
+main{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+section.page{display:none;padding-top:32px}
+section.page.visible{display:block;animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+h1,h2,h3,h4{font-family:var(--display)}
+.eyebrow{font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;color:var(--denim)}
+.page-title{font-size:2.2rem;margin-bottom:4px}
+.page-sub{margin-bottom:8px;max-width:640px;line-height:1.5}
+
+/* ---------- HERO ---------- */
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center;padding:36px 0 24px}
+.hero h1{font-size:clamp(3rem,9vw,5.4rem);line-height:.95;color:var(--nuit)}
+.hero h1 .stroke{color:var(--blanc);text-shadow:0 3px 0 rgba(20,33,61,.25)}
+.hero .rotator{font-size:1.22rem;font-weight:600;margin-top:14px;min-height:2em}
+.hero .rotator b{color:var(--denim)}
+.hero .cta-row{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+.btn{border:none;border-radius:999px;padding:13px 24px;font-weight:800;font-size:1rem;
+  transition:transform .12s}
+.btn:hover{transform:translateY(-2px)}
+.btn-dark{background:var(--nuit);color:var(--banane)}
+.btn-light{background:var(--blanc);color:var(--nuit);box-shadow:0 3px 0 rgba(20,33,61,.2)}
+.btn-sm{padding:8px 16px;font-size:.88rem}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+/* Signature : la lunette qui suit le curseur */
+.goggle-wrap{display:flex;justify-content:center}
+.goggle{width:min(240px,58vw);aspect-ratio:1;border-radius:50%;position:relative;
+  background:radial-gradient(circle at 35% 30%, #fff, #dcdcdc 60%, #bfbfbf);
+  border:17px solid #8d939c;
+  box-shadow:0 10px 0 rgba(20,33,61,.18), inset 0 -8px 14px rgba(0,0,0,.12)}
+.goggle::before,.goggle::after{content:'';position:absolute;top:38%;width:58px;height:42px;
+  background:#2f2f2f;border-radius:10px;z-index:-1}
+.goggle::before{left:-70px}
+.goggle::after{right:-70px}
+.iris{position:absolute;width:42%;height:42%;border-radius:50%;left:29%;top:29%;
+  background:radial-gradient(circle at 40% 35%, #b98a4f, #5b3a1e 70%);
+  display:flex;align-items:center;justify-content:center;transition:transform .08s linear}
+.pupil{width:44%;height:44%;border-radius:50%;background:#111;position:relative}
+.pupil::after{content:'';position:absolute;width:30%;height:30%;border-radius:50%;background:#fff;top:14%;left:16%}
+.goggle .lid{position:absolute;inset:-17px;border-radius:50%;background:var(--banane);
+  transform:scaleY(0);transform-origin:top;pointer-events:none}
+.goggle.blink .lid{animation:blink .28s ease}
+@keyframes blink{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(0)}}
+
+/* Cartes portail */
+.portal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.portal-card{background:var(--blanc);border-radius:var(--r);padding:20px;box-shadow:0 6px 0 rgba(20,33,61,.14);
+  border:3px solid var(--nuit);display:flex;flex-direction:column;gap:8px}
+.portal-card .emoji{font-size:2rem}
+.portal-card h3{font-size:1.15rem}
+.portal-card p{font-size:.9rem;line-height:1.4}
+.portal-card button{margin-top:auto;align-self:flex-start}
+
+/* ---------- RANG (barre) ---------- */
+.rank-bar{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);
+  padding:16px 20px;margin-top:18px;box-shadow:0 6px 0 rgba(20,33,61,.14)}
+.rank-bar .top{display:flex;justify-content:space-between;font-weight:800;flex-wrap:wrap;gap:6px}
+.rank-bar .track{height:18px;background:#efe6c2;border-radius:999px;margin-top:10px;overflow:hidden;border:2px solid var(--nuit)}
+.rank-bar .fill{height:100%;background:linear-gradient(90deg,var(--banane),#ffb100);width:0%;transition:width .5s;
+  display:flex;align-items:center;justify-content:flex-end;font-size:.7rem;padding-right:6px}
+
+/* ---------- PARCOURS ---------- */
+.level-header{margin-top:34px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.level-header h3{font-size:1.5rem}
+.level-pill{background:var(--nuit);color:var(--banane);border-radius:999px;padding:5px 14px;font-weight:800;font-size:.82rem}
+.lessons{display:grid;gap:16px;margin-top:14px}
+.lesson{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:20px;
+  box-shadow:0 6px 0 rgba(20,33,61,.14)}
+.lesson.collapsed .lesson-body{display:none}
+.lesson header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;cursor:pointer}
+.lesson .badge{background:var(--denim);color:#fff;border-radius:999px;padding:4px 12px;font-weight:800;font-size:.78rem}
+.lesson .badge.done{background:var(--vert)}
+.lesson h4{font-size:1.2rem;flex:1;min-width:170px}
+.lesson .chev{font-size:1.1rem;transition:transform .2s}
+.lesson.collapsed .chev{transform:rotate(-90deg)}
+.lesson .intro{margin:10px 0 12px;line-height:1.5}
+.vocab-table{width:100%;border-collapse:collapse;font-size:.95rem}
+.vocab-table th{text-align:left;font-family:var(--display);font-size:.82rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--denim);padding:6px 10px;border-bottom:2px solid var(--banane)}
+.vocab-table td{padding:7px 10px;border-bottom:1px dashed #e3d9b8}
+.vocab-table td.minion{font-weight:800;color:var(--denim)}
+.vocab-table td.origin{font-size:.84rem;color:#6b6b6b}
+.lesson footer{margin-top:14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.lesson .reward{font-size:.86rem;font-weight:700;color:var(--denim)}
+.grammar-box{background:var(--banane-clair);border-radius:14px;padding:13px 15px;margin-top:12px;font-size:.94rem;line-height:1.55}
+
+/* ---------- JEUX ---------- */
+.games-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:24px}
+.game-card{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:18px;
+  box-shadow:0 6px 0 rgba(20,33,61,.14);display:flex;flex-direction:column;gap:8px;position:relative}
+.game-card.locked{filter:grayscale(.9);opacity:.62}
+.game-card .lock{position:absolute;top:12px;right:12px;font-size:1.2rem}
+.game-card .emoji{font-size:2rem}
+.game-card h4{font-size:1.05rem}
+.game-card p{font-size:.85rem;line-height:1.4}
+.game-card .bonus-line{font-size:.78rem;font-weight:700;color:var(--denim)}
+.game-stage{margin-top:26px;background:var(--nuit);color:var(--blanc);border-radius:var(--r);padding:26px;display:none}
+.game-stage.open{display:block}
+.game-stage h3{color:var(--banane);font-size:1.5rem;margin-bottom:6px}
+.game-stage .rules{opacity:.85;margin-bottom:8px;font-size:.92rem}
+.game-hud{display:flex;gap:12px;font-weight:800;margin:12px 0 18px;flex-wrap:wrap}
+.game-hud span{background:var(--denim);border-radius:999px;padding:5px 14px;font-size:.92rem}
+.quiz-q{font-size:1.3rem;font-family:var(--display);margin-bottom:16px}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.quiz-opts button,.tf-opts button{background:var(--blanc);color:var(--nuit);border:none;border-radius:14px;
+  padding:15px;font-weight:800;font-size:1.02rem;transition:transform .1s}
+.quiz-opts button:hover,.tf-opts button:hover{transform:scale(1.03)}
+button.good{background:var(--vert)!important;color:#fff!important}
+button.bad{background:var(--rouge)!important;color:#fff!important}
+.tf-opts{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.tf-opts button{min-width:140px;font-size:1.2rem}
+.flashcard{perspective:1000px;max-width:330px;margin:0 auto 18px;cursor:pointer}
+.flashcard .inner{position:relative;width:100%;aspect-ratio:16/10;transform-style:preserve-3d;transition:transform .5s}
+.flashcard.flipped .inner{transform:rotateY(180deg)}
+.flashcard .face{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  font-family:var(--display);font-size:1.55rem;font-weight:700;padding:10px;text-align:center}
+.flashcard .front{background:var(--banane);color:var(--nuit)}
+.flashcard .back{background:var(--gelato);color:var(--nuit);transform:rotateY(180deg)}
+.flashcard .hint{font-family:var(--body);font-size:.82rem;font-weight:600;opacity:.7}
+.match-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.match-grid button{aspect-ratio:1;border:none;border-radius:16px;font-size:1.5rem;font-weight:800;
+  background:var(--blanc);color:var(--nuit);display:flex;align-items:center;justify-content:center;
+  padding:6px;transition:transform .12s}
+.match-grid button.sel{outline:4px solid var(--banane);transform:scale(1.05)}
+.match-grid button.found{background:var(--vert);color:#fff;cursor:default}
+.match-grid button .small{font-size:.82rem;font-family:var(--display)}
+.mem-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:560px}
+.mem-grid button{aspect-ratio:4/3;border:none;border-radius:14px;font-weight:800;font-size:.95rem;
+  background:var(--denim);color:transparent;transition:transform .15s;padding:4px}
+.mem-grid button.up{background:var(--blanc);color:var(--nuit)}
+.mem-grid button.won{background:var(--vert);color:#fff;cursor:default}
+.mem-grid button .em{font-size:1.3rem;display:block}
+.mystery-word{font-family:var(--display);font-size:2rem;letter-spacing:.35em;text-align:center;margin:14px 0}
+.mystery-lives{text-align:center;font-size:1.4rem;margin-bottom:14px}
+.kbd{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;max-width:600px;margin:0 auto}
+.kbd button{width:42px;height:44px;border:none;border-radius:10px;background:var(--blanc);color:var(--nuit);
+  font-weight:800;font-size:1rem}
+.kbd button:disabled{opacity:.35}
+.builder-target{min-height:56px;background:rgba(255,255,255,.1);border:2px dashed var(--banane);
+  border-radius:14px;padding:10px;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.builder-pool{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.word-chip{background:var(--blanc);color:var(--nuit);border:none;border-radius:999px;
+  padding:9px 16px;font-weight:800;font-size:1rem}
+.builder-target .word-chip{background:var(--banane)}
+.rush-input{width:100%;max-width:380px;border:3px solid var(--banane);border-radius:14px;
+  padding:13px 16px;font-size:1.15rem;font-family:var(--body);font-weight:700;background:#fffef8;color:var(--nuit)}
+.game-actions{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+.result-banner{margin-top:16px;font-size:1.15rem;font-weight:800;color:var(--banane)}
+
+/* ---------- TRADUCTEUR ---------- */
+.trad-toggles{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.seg{display:inline-flex;background:#efe6c2;border:3px solid var(--nuit);border-radius:999px;overflow:hidden}
+.seg button{border:none;background:transparent;padding:9px 16px;font-weight:800;font-size:.9rem;color:var(--nuit)}
+.seg button.on{background:var(--nuit);color:var(--banane)}
+.output.loading{color:#8b93ad;font-style:italic;animation:pulse 1s infinite alternate}
+@keyframes pulse{from{opacity:.55}to{opacity:1}}
+.translator{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);
+  padding:24px;margin-top:24px;box-shadow:0 6px 0 rgba(20,33,61,.14)}
+.translator textarea{width:100%;min-height:110px;border:3px solid var(--nuit);border-radius:14px;
+  padding:14px;font-family:var(--body);font-size:1.05rem;resize:vertical;background:#fffef8}
+.translator .arrow{text-align:center;font-size:1.5rem;margin:10px 0}
+.output{min-height:80px;background:var(--nuit);color:var(--banane);border-radius:14px;
+  padding:16px;font-size:1.12rem;font-weight:700;line-height:1.5}
+.output .placeholder{color:#8b93ad;font-weight:400;font-style:italic}
+.translator .row{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+.dico{margin-top:28px}
+.dico-search{width:100%;max-width:340px;border:3px solid var(--nuit);border-radius:999px;
+  padding:10px 18px;font-family:var(--body);font-size:.98rem;margin-top:10px;background:#fffef8}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chip{background:var(--blanc);border:2px solid var(--nuit);border-radius:999px;padding:6px 12px;
+  font-size:.85rem;font-weight:700}
+.chip b{color:var(--denim)}
+.chip.locked{opacity:.5;border-style:dashed}
+
+/* ---------- PROGRÈS ---------- */
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
+.badge-card{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:16px;
+  text-align:center;box-shadow:0 5px 0 rgba(20,33,61,.14)}
+.badge-card.off{filter:grayscale(1);opacity:.5}
+.badge-card .em{font-size:2.2rem}
+.badge-card h4{font-size:.98rem;margin-top:6px}
+.badge-card p{font-size:.78rem;margin-top:4px;line-height:1.35}
+.diploma{margin-top:28px;background:var(--blanc);border:6px double var(--denim);border-radius:14px;
+  padding:34px;text-align:center;box-shadow:0 8px 0 rgba(20,33,61,.14)}
+.diploma h3{font-size:1.9rem;color:var(--denim)}
+.diploma .name-input{border:none;border-bottom:3px dashed var(--banane);font-family:var(--display);
+  font-size:1.5rem;text-align:center;padding:6px;max-width:320px;width:100%;background:transparent;color:var(--nuit)}
+.diploma p{margin-top:10px;line-height:1.55}
+.save-box{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:20px;margin-top:26px;
+  box-shadow:0 6px 0 rgba(20,33,61,.14)}
+.save-box textarea{width:100%;min-height:70px;border:2px solid var(--nuit);border-radius:12px;padding:10px;
+  font-family:monospace;font-size:.82rem;margin-top:10px;background:#fffef8}
+.stats-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.stat{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:14px 22px;
+  font-weight:800;box-shadow:0 5px 0 rgba(20,33,61,.14)}
+.stat .n{font-family:var(--display);font-size:1.7rem;color:var(--denim);display:block}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(130px);
+  background:var(--nuit);color:var(--banane);padding:14px 24px;border-radius:999px;font-weight:800;
+  transition:transform .3s;z-index:99;box-shadow:0 8px 22px rgba(0,0,0,.3);max-width:92vw;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.note{font-size:.85rem;color:#5c5433;margin-top:14px}
+
+@media (max-width:900px){
+  .portal-grid{grid-template-columns:repeat(2,1fr)}
+  .games-grid{grid-template-columns:repeat(2,1fr)}
+  .badges-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .goggle-wrap{order:-1}
+  .portal-grid,.games-grid{grid-template-columns:1fr}
+  .quiz-opts{grid-template-columns:1fr}
+  .match-grid{grid-template-columns:repeat(3,1fr)}
+  .mem-grid{grid-template-columns:repeat(3,1fr)}
+}
+.fan-note{max-width:900px;margin:8px auto 28px;padding:0 16px;font-size:.78rem;line-height:1.5;text-align:center;color:var(--nuit);opacity:.75}
+</style>
+</head>
+<body>
+
+<nav aria-label="Navigation principale">
+  <span class="logo"><span class="mini-goggle" aria-hidden="true"></span>Minionese Academy</span>
+  <button class="tab active" data-page="accueil">Accueil</button>
+  <button class="tab" data-page="parcours">Parcours</button>
+  <button class="tab" data-page="jeux">Mini-jeux</button>
+  <button class="tab" data-page="traducteur">Traducteur</button>
+  <button class="tab" data-page="progres">Progrès</button>
+  <span class="banana-counter" title="Tes bananes">🍌 <span id="bananaCount">0</span></span>
+</nav>
+
+<main>
+
+<!-- ================= ACCUEIL ================= -->
+<section class="page visible" id="page-accueil">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">L'académie officielle-euh du</p>
+      <h1>BELLO<span class="stroke">!</span></h1>
+      <p class="rotator" id="rotator">« <b>Bello</b> » veut dire <b>bonjour</b> !</p>
+      <div class="cta-row">
+        <button class="btn btn-dark" onclick="go('parcours')">Commencer le parcours</button>
+        <button class="btn btn-light" onclick="go('traducteur')">Essayer le traducteur</button>
+      </div>
+    </div>
+    <div class="goggle-wrap">
+      <div class="goggle" id="goggle" aria-hidden="true">
+        <div class="iris" id="iris"><div class="pupil"></div></div>
+        <div class="lid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rank-bar">
+    <div class="top">
+      <span>Ton rang : <span id="rankName">🍼 Bébé Minion</span></span>
+      <span id="rankNext"></span>
+    </div>
+    <div class="track"><div class="fill" id="rankFill"></div></div>
+  </div>
+
+  <div class="portal-grid">
+    <div class="portal-card">
+      <span class="emoji">📚</span>
+      <h3>Le Parcours</h3>
+      <p>13 leçons sur 3 niveaux : vocabulaire, grammaire, histoire de la langue et le film de 2026.</p>
+      <button class="btn btn-dark btn-sm" onclick="go('parcours')">Apprendre</button>
+    </div>
+    <div class="portal-card">
+      <span class="emoji">🎮</span>
+      <h3>Les Mini-jeux</h3>
+      <p>8 jeux à débloquer : quiz, memory, mot mystère, phrases à reconstruire et plus.</p>
+      <button class="btn btn-dark btn-sm" onclick="go('jeux')">Jouer</button>
+    </div>
+    <div class="portal-card">
+      <span class="emoji">🔁</span>
+      <h3>Le Traducteur</h3>
+      <p>Environ 150 mots et expressions issus des films et des dictionnaires de fans, plus les mots exclusifs gagnés en jeu.</p>
+      <button class="btn btn-dark btn-sm" onclick="go('traducteur')">Traduire</button>
+    </div>
+    <div class="portal-card">
+      <span class="emoji">🏆</span>
+      <h3>Tes Progrès</h3>
+      <p>Rangs, badges, diplôme officiel et code de sauvegarde de ta progression.</p>
+      <button class="btn btn-dark btn-sm" onclick="go('progres')">Voir</button>
+    </div>
+  </div>
+  <p class="note">💡 Boucle de progression : Leçon terminée → Mini-jeu débloqué → Victoire → Mots exclusifs + bananes 🍌 → Rangs & badges → Diplôme du Roi Banane 👑</p>
+</section>
+
+<!-- ================= PARCOURS ================= -->
+<section class="page" id="page-parcours">
+  <p class="eyebrow">Étape 1 · Apprendre</p>
+  <h2 class="page-title">Le Parcours d'apprentissage</h2>
+  <p class="page-sub">13 leçons sur 3 niveaux — dont une dédiée au film « Des Minions et des monstres » (2026). Chaque leçon terminée rapporte des bananes et débloque des mini-jeux. Touche une leçon pour l'ouvrir ou la replier.</p>
+  <div id="lessonsWrap"></div>
+</section>
+
+<!-- ================= JEUX ================= -->
+<section class="page" id="page-jeux">
+  <p class="eyebrow">Étape 2 · S'entraîner</p>
+  <h2 class="page-title">Les Mini-jeux</h2>
+  <p class="page-sub">8 jeux, chacun débloqué par une leçon. La première victoire offre 2 mots exclusifs pour le traducteur + 5 bananes. Les victoires suivantes : +2 bananes.</p>
+  <div class="games-grid" id="gamesGrid"></div>
+  <div class="game-stage" id="gameStage"></div>
+</section>
+
+<!-- ================= TRADUCTEUR ================= -->
+<section class="page" id="page-traducteur">
+  <p class="eyebrow">Étape 3 · Parler</p>
+  <h2 class="page-title">Le Traducteur</h2>
+  <div class="translator">
+    <div class="trad-toggles">
+      <div class="seg" role="group" aria-label="Moteur de traduction">
+        <button id="modeAI" class="on" onclick="setMode('ai')">🤖 Traduction IA</button>
+        <button id="modeLocal" onclick="setMode('local')">⚙️ Moteur local</button>
+      </div>
+      <button class="btn btn-light btn-sm" id="dirBtn" onclick="toggleDir()">🇫🇷 Français → 🍌 Minionese</button>
+    </div>
+    <label for="frInput" style="font-weight:800" id="inputLabel">Ton texte en français :</label>
+    <textarea id="frInput" placeholder="Ex. : Bonjour ! Je veux une banane et une glace, merci. Au revoir !"></textarea>
+    <div class="arrow" aria-hidden="true">⬇️ 🍌 ⬇️</div>
+    <div class="output" id="output" aria-live="polite"><span class="placeholder">La traduction en Minionese apparaîtra ici…</span></div>
+    <div class="row">
+      <button class="btn btn-dark" id="translateBtn" onclick="translateText()">Traduire !</button>
+      <button class="btn btn-light" onclick="speakOutput()">🔊 Écouter</button>
+      <button class="btn btn-light" onclick="copyOutput()">Copier</button>
+      <button class="btn btn-light" onclick="randomSentence()">🎲 Phrase au hasard</button>
+    </div>
+    <p class="note">🤖 Le mode IA reformule entièrement la phrase dans le style Minion (comme un vrai traducteur) en s'appuyant sur le lexique de l'académie. S'il n'est pas disponible, le moteur local ⚙️ (dictionnaire mot à mot) prend automatiquement le relais.</p>
+  </div>
+  <div class="dico">
+    <h3 style="font-size:1.4rem">Dictionnaire du moteur (<span id="dicoCount"></span> entrées)</h3>
+    <p style="margin-top:6px">Les mots en pointillés sont <b>exclusifs</b> : gagne les mini-jeux pour les débloquer.</p>
+    <input type="search" class="dico-search" id="dicoSearch" placeholder="🔎 Chercher un mot…" oninput="renderDico()">
+    <div class="chips" id="dicoChips"></div>
+  </div>
+</section>
+
+<!-- ================= PROGRÈS ================= -->
+<section class="page" id="page-progres">
+  <p class="eyebrow">Étape 4 · Briller</p>
+  <h2 class="page-title">Tes Progrès</h2>
+
+  <div class="stats-row">
+    <div class="stat"><span class="n" id="stLessons">0/13</span>Leçons</div>
+    <div class="stat"><span class="n" id="stGames">0/8</span>Jeux gagnés</div>
+    <div class="stat"><span class="n" id="stWords">0</span>Mots exclusifs</div>
+    <div class="stat"><span class="n" id="stBananas">0</span>Bananes 🍌</div>
+  </div>
+
+  <div class="rank-bar">
+    <div class="top">
+      <span>Rang : <span id="rankName2">🍼 Bébé Minion</span></span>
+      <span id="rankNext2"></span>
+    </div>
+    <div class="track"><div class="fill" id="rankFill2"></div></div>
+  </div>
+
+  <h3 style="font-size:1.5rem;margin-top:30px">Badges</h3>
+  <div class="badges-grid" id="badgesGrid"></div>
+
+  <div class="diploma" id="diploma" style="display:none">
+    <p class="eyebrow">Diplôme officiel-euh</p>
+    <h3>🎓 Maître du Minionese 👑</h3>
+    <p>Décerné par l'Académie à</p>
+    <input class="name-input" id="diplomaName" placeholder="Ton nom ici" aria-label="Ton nom pour le diplôme">
+    <p>pour avoir terminé les <b>13 leçons</b> et vaincu les <b>8 mini-jeux</b>.<br>
+    Tulaliloo ti amo. Poopaye, et bonne route, Roi Banane !</p>
+  </div>
+
+  <div class="save-box">
+    <h3 style="font-size:1.3rem">💾 Sauvegarde</h3>
+    <p style="margin-top:6px;font-size:.92rem;line-height:1.5">Ta progression est enregistrée automatiquement dans ce navigateur. Pour la retrouver sur un autre appareil, génère ton code et colle-le là-bas.</p>
+    <div class="row" style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn btn-dark btn-sm" onclick="exportSave()">Générer mon code</button>
+      <button class="btn btn-light btn-sm" onclick="importSave()">Restaurer ce code</button>
+      <button class="btn btn-light btn-sm" id="resetBtn" onclick="resetProgress(this)">Recommencer à zéro</button>
+    </div>
+    <textarea id="saveArea" placeholder="Ton code de sauvegarde apparaîtra (ou se colle) ici…"></textarea>
+  </div>
+</section>
+
+</main>
+<p class="fan-note">Site de fan non officiel, sans lien avec Illumination ni Universal Pictures. « Minions » et les personnages associés appartiennent à leurs ayants droit.</p>
+
+<div class="toast" id="toast" role="status"></div>
+<script>
+/* ================== ÉTAT (progression en mémoire, exportable) ================== */
+const state = {
+  bananas: 0,
+  lessonsDone: {},     // {1:true,...}
+  gamesDone: {},       // {quiz:true,...}
+  unlocked: new Set()  // clés FR bonus débloquées
+};
+let TIMERS = [];
+function clearTimers(){ TIMERS.forEach(t=>clearInterval(t)); TIMERS=[]; }
+
+/* ================== DONNÉES : 12 LEÇONS / 3 NIVEAUX ==================
+   Vocabulaire compilé depuis les films, les interviews de Pierre Coffin
+   et les dictionnaires de fans (Fandom, guides Minionese). */
+const LEVELS = [
+  {
+    name:"Niveau 1 — Débutant", pill:"🍼 Bébé Minion", lessons:[
+    {
+      id:1, emoji:"👋", title:"Salutations & politesse",
+      intro:"Tout commence par « Bello ! ». Les mots essentiels pour saluer, remercier et rester poli (un Minion poli obtient plus de bananes).",
+      vocab:[
+        ["Bonjour / Salut","Bello","proche de l'italien « bello »"],
+        ["Au revoir","Poopaye","déformation de « goodbye »"],
+        ["Au revoir (variante chic)","Ciao","italien"],
+        ["Merci","Tank yu","anglais « thank you »"],
+        ["Merci beaucoup","Trema kasih","indonésien « terima kasih »"],
+        ["S'il te plaît","Por favor","espagnol"],
+        ["Oui","Si","espagnol / italien"],
+        ["Oui (variante)","Da","russe"],
+        ["Non","No","universel !"]
+      ],
+      grammar:"📐 Règle n°1 : le Minionese emprunte à plein de langues (anglais, espagnol, italien, français, coréen, tagalog, russe, indonésien…) et déforme les mots pour les rendre rigolos. En cas de doute, prononce comme un enfant de 3 ans très enthousiaste.",
+      unlocksGame:"quiz", reward:"Débloque le Quiz chrono ⏱️"
+    },
+    {
+      id:2, emoji:"🍌", title:"La nourriture (le plus important)",
+      intro:"Un Minion pense à manger environ 97 % du temps. Ce vocabulaire est donc absolument vital.",
+      vocab:[
+        ["Banane","Banana","LE mot sacré"],
+        ["Pomme","Bapple","banana + apple"],
+        ["Glace","Gelato","italien"],
+        ["Poulet","Poulet tikka masala","mi-français, mi-cuisine indienne — cité par les créateurs eux-mêmes"],
+        ["Papaye","Papaya","espagnol"],
+        ["J'ai faim / ventre vide","Matoka","le cri du ventre minion"],
+        ["Ça va être délicieux !","Yam yam!","onomatopée gourmande"],
+        ["Santé ! (trinquer)","Kampai","japonais « kanpai »"]
+      ],
+      grammar:"📐 Règle n°2 : quand un mot te manque, remplace-le par « banana ». Étonnamment, ça fonctionne dans 80 % des conversations. Et devant un bon plat, « yam yam ! » est toujours correct.",
+      unlocksGame:"flash", reward:"Débloque les Flashcards 🃏"
+    },
+    {
+      id:3, emoji:"🔢", title:"Les nombres",
+      intro:"Les Minions comptent en coréen — enfin, jusqu'à 5. Après, ça devient de l'improvisation.",
+      vocab:[
+        ["Un","Hana","coréen (parfois raccourci en « nah »)"],
+        ["Deux","Dul","coréen"],
+        ["Trois","Sae","coréen (variante : « throo »)"],
+        ["Quatre","Net","coréen"],
+        ["Cinq","Dasot","coréen"],
+        ["Beaucoup","Mucho","espagnol"],
+        ["Énormément","Mucho mucho","la règle de répétition en action"]
+      ],
+      grammar:"📐 Règle n°3 : au-delà de cinq, on dit « mucho ». Au-delà de cent, « mucho mucho ». Les mathématiques minions sont d'une élégance rare.",
+      unlocksGame:"match", reward:"Débloque le jeu d'Association 🧩"
+    },
+    {
+      id:4, emoji:"❤️", title:"Les émotions",
+      intro:"Pour exprimer l'amour, les excuses, la surprise, le dégoût… tout ce qui fait battre un petit cœur jaune.",
+      vocab:[
+        ["Je t'aime / On t'aime","Tulaliloo ti amo","italien « ti amo »"],
+        ["Pardon / Désolé","Bi-do","l'excuse officielle"],
+        ["Désolé (variante)","Ditto","anglais détourné"],
+        ["L'amour ! Oh là là !","Ooh la la","du français, évidemment"],
+        ["Waouh !","Whaaa","surprise émerveillée"],
+        ["Ça alors ! (frayeur)","Eek","petit cri de surprise"],
+        ["Beurk !","Flavuk","dégoût minionesque"],
+        ["Comme c'est mignon !","Ho cue","de « how cute »"],
+        ["Gros bisous","Muak muak muak","bruit de bisou"]
+      ],
+      grammar:"📐 Règle n°4 : l'intonation fait 90 % du sens. « Bi-do » murmuré = petite bêtise. « BI-DO BI-DO » paniqué = très grosse bêtise (probablement un lance-fusée).",
+      unlocksGame:null, reward:"Fin du niveau 1 ! +2 🍌 bonus"
+    }
+  ]},
+  {
+    name:"Niveau 2 — Intermédiaire", pill:"🧢 Minion confirmé", lessons:[
+    {
+      id:5, emoji:"👨‍👩‍👧", title:"La famille, les amis & les compliments",
+      intro:"Les Minions vivent en tribu. Impossible de survivre sans savoir nommer son buddy préféré — ni sans réclamer un compliment.",
+      vocab:[
+        ["Ami / Copain","Buddy","anglais"],
+        ["La famille","La familia","espagnol"],
+        ["Maman","Mama","universel"],
+        ["Papa","Papa","universel"],
+        ["Bébé","Bebe","espagnol / français"],
+        ["Chiot","Puppy","anglais"],
+        ["Chef / Patron","Boss","anglais"],
+        ["Je suis beau, non ?","Popadom?","la question préférée devant un miroir"],
+        ["L'ours en peluche de Bob","Tim","culture générale minion indispensable"]
+      ],
+      grammar:"📐 Règle n°5 : « buddy » se colle à tout pour montrer son affection : banana-buddy, gelato-buddy, boss-buddy. Plus il y a de buddies, plus on est heureux.",
+      unlocksGame:"memory", reward:"Débloque le Memory 🧠"
+    },
+    {
+      id:6, emoji:"❓", title:"Poser des questions",
+      intro:"Un Minion est curieux de nature. Voici comment interroger le monde (et son boss).",
+      vocab:[
+        ["Quoi ?","Po ka?","invention pure"],
+        ["Ça va ? / Quoi de neuf ?","Que pasa?","espagnol"],
+        ["Que s'est-il passé ?","Ma twat?","après chaque explosion"],
+        ["Que t'est-il arrivé ?","Ma calino?","version inquiète"],
+        ["Qu'est-ce qui se passe ici ?","Bulaka?","version soupçonneuse"],
+        ["Pourquoi ?","Por qué?","espagnol"],
+        ["Où ?","Donde?","espagnol"],
+        ["Qui ?","Quien?","espagnol"],
+        ["On peut commencer ?","Pwede na?","tagalog (philippin)"]
+      ],
+      grammar:"📐 Règle n°6 : pour poser une question, monte la voix à la fin. Très haut. Encore plus haut que ça. Voilà, parfait.",
+      unlocksGame:"mystery", reward:"Débloque le Mot mystère 🔤"
+    },
+    {
+      id:7, emoji:"🏃", title:"Les actions du quotidien",
+      intro:"Regarder, vouloir, foncer, attendre, filer à l'anglaise : les verbes miniature de la vie minionesque.",
+      vocab:[
+        ["Regarde-toi !","Luk at tu","anglais « look at you »"],
+        ["Je veux","Me want","anglais simplifié"],
+        ["Stop / Arrête","Stopa","stop + a (variante : « stupa »)"],
+        ["Vas-y !","Anda","espagnol"],
+        ["Attends !","Pekang","patience minion (durée max : 4 secondes)"],
+        ["Prends-le","Naje","chinois"],
+        ["Suis-moi","Kam-nen","allemand bricolé"],
+        ["Ici, ici !","Melomo","pour appeler quelqu'un"],
+        ["Me voilà !","Oca!","entrée en scène"],
+        ["Je m'en vais","Me mé cassose","du français « je me casse » !"],
+        ["Cours !","Yakitori!","japonais… qui veut dire « brochette de poulet »"],
+        ["S'asseoir","Chasy","du français « chaise »"]
+      ],
+      grammar:"📐 Règle n°7 : pas de conjugaison, jamais. « Me want banana » fonctionne au passé, au présent et au futur. Le contexte (et les grands yeux) font le reste.",
+      unlocksGame:null, reward:"+3 🍌"
+    },
+    {
+      id:8, emoji:"🚨", title:"Alarmes, dangers & disputes",
+      intro:"Le module le plus bruyant de la formation. À réviser de préférence quand les voisins sont sortis.",
+      vocab:[
+        ["Au feu ! / Alarme !","Bee do bee do","imitation de sirène"],
+        ["Danger !","Baduga","soudanais « inattendu »"],
+        ["La bombe","Bomba","filipino"],
+        ["Oh non… (catastrophe)","Oh poop","juste avant que ça explose"],
+        ["Oups","Uh-oh","juste après que ça a explosé"],
+        ["Tu es fichu…","Wo kalio","menace polie"],
+        ["Comment oses-tu ?!","Sa la ka!","indignation suprême"],
+        ["Je te déteste !","Tatata bala tu","à réserver aux disputes de récré"],
+        ["Dans ta face !","Boo-ya!","victoire provocante"],
+        ["Hourra !","Ku ga!","joie collective"],
+        ["On a gagné !","Kum-ba-ya!","cri de triomphe"]
+      ],
+      grammar:"📐 Règle n°8 : répéter deux fois pour insister, trois fois pour l'urgence absolue. « Bee do » chuchoté = petite inquiétude. « BEE DO BEE DO BEE DO » = évacuation générale.",
+      unlocksGame:"builder", reward:"Débloque le Constructeur de phrases 🧱"
+    }
+  ]},
+  {
+    name:"Niveau 3 — Expert", pill:"👑 Futur Roi Banane", lessons:[
+    {
+      id:9, emoji:"🎉", title:"La fête, la musique & le mariage",
+      intro:"Les Minions transforment n'importe quel événement en fête. Même un enterrement de grille-pain.",
+      vocab:[
+        ["La fête","Fiesta","espagnol"],
+        ["Le mariage","La boda","espagnol"],
+        ["La musique","Musica","italien / espagnol"],
+        ["La danse","Danza","italien"],
+        ["Chantons !","Wee-tee-toh-toh!","l'appel au karaoké"],
+        ["Le xylophone","Xylopo","instrument officiel minion"],
+        ["La chanson « YMCA »","Tu pues de bras","oui : « tu pues des bras » — merci Pierre Coffin"],
+        ["Le cadeau","Regalo","espagnol"],
+        ["Le rabat-joie","Profiterol","« party pooper » gourmand"],
+        ["Je le jure","Underwear","oui, vraiment — parfait pour les serments"]
+      ],
+      grammar:"📐 Règle n°9 : à une boda, tout discours finit en chanson, toute chanson finit en danse, toute danse finit en catastrophe. C'est le cycle de la vie.",
+      unlocksGame:"tf", reward:"Débloque le Vrai ou Faux ⚡"
+    },
+    {
+      id:10, emoji:"💼", title:"Le travail, le Boss & les insultes de bureau",
+      intro:"Servir un maître maléfique est un métier exigeant. Voici le vocabulaire professionnel indispensable — compliments et petites piques incluses.",
+      vocab:[
+        ["Le travail","Trabaho","tagalog"],
+        ["Le plan","Plan","universel (les plans ratent dans toutes les langues)"],
+        ["L'argent","Moni","anglais « money »"],
+        ["La maison / le repaire","Comarino","le QG des bêtises"],
+        ["La couronne","Crona","suédois — utile pour voler celle d'Angleterre"],
+        ["Pour toi","Para tu","espagnol simplifié"],
+        ["Le froussard","Molla","pour un collègue peu courageux"],
+        ["Le perdant","Baboy","filipino « cochon »"],
+        ["Le derrière","Buttom","de « bottom » — humour minion niveau 1"],
+        ["Vite, au travail !","Presto","italien"]
+      ],
+      grammar:"📐 Règle n°10 : face au boss, phrases courtes et grands yeux innocents. « Si boss ! No boss ! Bi-do boss ! » couvre 100 % des situations professionnelles.",
+      unlocksGame:null, reward:"+3 🍌"
+    },
+    {
+      id:11, emoji:"🧠", title:"Grammaire avancée & adjectifs",
+      intro:"Les trois règles d'or et les adjectifs qui distinguent un touriste d'un vrai locuteur du Minionese.",
+      vocab:[
+        ["Beau / Belle","Papagaya","compliment suprême"],
+        ["Moche / Laid","Bananonina","l'insulte ultime : une banane ratée"],
+        ["Fou / Folle","Loka","espagnol « loca »"],
+        ["Grand","Grande","italien / espagnol"],
+        ["Petit","Piccolo","italien"],
+        ["Vite","Rapido","espagnol"],
+        ["Un peu","Poco","italien / espagnol"],
+        ["Joli","Bonito","espagnol"],
+        ["Voici / C'est","Sella","du français « c'est là »"],
+        ["Là-bas","La bais","du français"]
+      ],
+      grammar:"📐 Les 3 règles d'or : ① Répétition d'insistance (« banana banana ! » = j'ai VRAIMENT faim). ② Le mot le plus important arrive en premier, l'émotion décide de l'ordre. ③ Le diminutif affectif : ajouter « -y » ou doubler la syllabe rend tout adorable (boss → bossy-boss).",
+      unlocksGame:"rush", reward:"Débloque le Banana Rush ⌨️"
+    },
+    {
+      id:12, emoji:"🎓", title:"Histoire & culture de la langue",
+      intro:"Le Minionese (ou « langue banane ») a été inventé par le réalisateur français Pierre Coffin, qui double lui-même tous les Minions. Selon les créateurs, la langue regorge de références à la nourriture — Pierre Coffin improvise en piochant des mots de plusieurs langues, souvent des noms de plats. Le résultat sonne familier partout dans le monde tout en restant délicieusement incompréhensible.",
+      vocab:[
+        ["Je / Moi","Me","anglais"],
+        ["Toi","Tu","français / espagnol"],
+        ["Nous","Tulaliloo","invention pure"],
+        ["Le bonheur absolu","Papagena","clin d'œil à « La Flûte enchantée » de Mozart"],
+        ["La langue","La lingua","italien"],
+        ["Le derrière (version japonaise)","Oshiri","entendu dans le doublage japonais"],
+        ["Le rire officiel","He-he-he","à alterner avec « ha-ha-ha »"],
+        ["Bravo !","Bravo-nana","bravo + banana, évidemment"]
+      ],
+      grammar:"🎓 Le savais-tu ? Il n'existe aucun dictionnaire officiel : l'orthographe varie selon les fans et les sous-titres (« kampai » ou « kanpai », « stopa » ou « stupa »…). Le rythme et la mélodie comptent plus que les mots.",
+      unlocksGame:null, reward:"+3 🍌"
+    },
+    {
+      id:13, emoji:"🎬", title:"Le cinéma & les monstres — le film de 2026",
+      intro:"« Des Minions et des monstres » (2026) envoie les Minions dans le Hollywood des années 1920, en plein cinéma muet. Pierre Coffin, qui réalise le film et double les Minions, y enrichit la langue de nouveaux mots. On y suit un nouveau trio, James, Henry et Ed, qui deviennent des stars en chassant les monstres, puis tentent leur retour avec leur propre film de monstres quand arrive le cinéma parlant.",
+      vocab:[
+        ["Le téléphone","Teléfono","espagnol — entendu dans le film"],
+        ["Mon amour","Mi amor","espagnol — entendu dans le film"],
+        ["Merci (clin d'œil final)","Shyeh-shyeh","chinois « xièxie », glissé par Pierre Coffin à la toute fin du film"],
+        ["Le grand chef (version latino)","Gran Jefe","« Big Boss » réenregistré pour l'Amérique latine"],
+        ["Les pâtes / le régal","Carbonara","VF 2026 — il faut tendre l'oreille"],
+        ["Les lasagnes","Lasagna","VF 2026"],
+        ["La fête surprise","Pignata","VF 2026, de « piñata »"],
+        ["Le footballeur / le champion","Mbappé","VF 2026 — oui oui, authentique !"],
+        ["Le boulet","Casos","VF 2026, argot français"],
+        ["En route ! (klaxon)","Toot toot!","VF 2026"],
+        ["Le monstre (pas si effrayant)","Goomi","la créature du film, clin d'œil à Lovecraft"]
+      ],
+      grammar:"🎬 Le savais-tu ? Pierre Coffin écrit d'abord les répliques en anglais avant de les « minioniser », pioche des mots dans les menus de restaurants, et monte sa voix de six demi-tons. Pour ce film, il a ajusté la langue au Hollywood des années 1920. Félicitations, tu as terminé le parcours !",
+      unlocksGame:null, reward:"Diplôme en vue ! +5 🍌"
+    }
+  ]}
+];
+const ALL_LESSONS = LEVELS.flatMap(l=>l.lessons);
+
+/* ================== DICTIONNAIRE DU TRADUCTEUR (~140 entrées) ================== */
+const BASE_DICT = {
+  /* — expressions longues d'abord (remplacées en priorité) — */
+  "je t'aime":"tulaliloo ti amo","nous t'aimons":"tulaliloo ti amo","on t'aime":"tulaliloo ti amo",
+  "s'il te plaît":"por favor","s'il vous plaît":"por favor",
+  "merci beaucoup":"trema kasih","au revoir":"poopaye","à bientôt":"ciao","à plus":"ciao",
+  "je le jure":"underwear","gros bisous":"muak muak muak","bisous":"muak muak","bisou":"muak",
+  "au feu":"bee do bee do","je te déteste":"tatata bala tu","comment oses-tu":"sa la ka",
+  "tu es fichu":"wo kalio","dans ta face":"boo-ya","on a gagné":"kum-ba-ya",
+  "que s'est-il passé":"ma twat","qu'est-ce qui se passe":"bulaka","que t'est-il arrivé":"ma calino",
+  "comment ça va":"que pasa","comment vas-tu":"que pasa","comment allez-vous":"que pasa",
+  "quoi de neuf":"que pasa","ça va":"que pasa","c'est parti":"pwede na","on peut commencer":"pwede na",
+  "je m'en vais":"me mé cassose","je me casse":"me mé cassose","suis-moi":"kam-nen",
+  "me voilà":"oca","comme c'est mignon":"ho cue","ça alors":"eek",
+  "j'ai faim":"matoka","c'est délicieux":"yam yam","oh là là":"ooh la la","oh non":"oh poop",
+  "je veux":"me want","pour toi":"para tu","regarde-toi":"luk at tu",
+  "le grand chef":"grande boss","bonne nuit":"nighty-poopaye",
+  "je suis beau":"popadom","je suis belle":"popadom","vite vite":"rapido rapido",
+  /* — mots simples — */
+  "bonjour":"bello","salut":"bello","coucou":"bello","hello":"bello","hey":"bello",
+  "bonsoir":"bello","bienvenue":"bello bello","merci":"tank yu",
+  "banane":"banana","bananes":"banana banana","pomme":"bapple","pommes":"bapple bapple",
+  "glace":"gelato","glaces":"gelato","poulet":"poulet tikka masala","papaye":"papaya",
+  "délicieux":"yam yam","miam":"yam yam","faim":"matoka","santé":"kampai",
+  "jouet":"papoy","jouets":"papoy papoy","peluche":"tim",
+  "oui":"si","non":"no","stop":"stopa","arrête":"stopa","attends":"pekang",
+  "prends":"naje","ici":"melomo","cours":"yakitori","fuyons":"yakitori",
+  "pardon":"bi-do","désolé":"bi-do","désolée":"bi-do","waouh":"whaaa","wow":"whaaa",
+  "beurk":"flavuk","oups":"uh-oh","hourra":"ku ga","bravo":"bravo-nana",
+  "un":"hana","une":"hana","deux":"dul","trois":"sae","quatre":"net","cinq":"dasot",
+  "beaucoup":"mucho","énormément":"mucho mucho",
+  "ami":"buddy","amie":"buddy","amis":"buddies","copain":"buddy","copine":"buddy",
+  "famille":"la familia","maman":"mama","papa":"papa","bébé":"bebe",
+  "chien":"puppy","chiot":"puppy","chat":"gato",
+  "chef":"boss","patron":"boss","travail":"trabaho","argent":"moni","plan":"plan",
+  "maison":"comarino","couronne":"crona","froussard":"molla","lâche":"molla",
+  "perdant":"baboy","rabat-joie":"profiterol","derrière":"buttom","fesses":"oshiri",
+  "danger":"baduga","bombe":"bomba","alarme":"bee do bee do","feu":"bee do",
+  "vite":"rapido","fête":"fiesta","mariage":"la boda","musique":"musica",
+  "danse":"danza","chantons":"wee-tee-toh-toh","chanson":"musica","xylophone":"xylopo",
+  "cadeau":"regalo","fou":"loka","folle":"loka",
+  "grand":"grande","petit":"piccolo","petite":"piccolo","un peu":"poco",
+  "joli":"bonito","jolie":"bonito","beau":"papagaya","belle":"papagaya",
+  "moche":"bananonina","laid":"bananonina","laide":"bananonina",
+  "voici":"sella","là-bas":"la bais","regarde":"luk",
+  "pourquoi":"por qué","où":"donde","qui":"quien","quoi":"po ka",
+  "moi":"me","toi":"tu","nous":"tulaliloo","bonheur":"papagena","langue":"la lingua",
+  "assieds-toi":"chasy","chaise":"chasy","équipe":"tropa","peur":"boo","rire":"he-he-he",
+  "téléphone":"teléfono","mon amour":"mi amor","merci mille fois":"shyeh-shyeh",
+  "pâtes":"carbonara","lasagnes":"lasagna","fête surprise":"pignata",
+  "footballeur":"mbappé","boulet":"casos","en route":"toot toot","klaxon":"toot toot",
+  "monstre":"goomi","monstres":"goomi goomi","cinéma":"cine-cine","film":"cine-cine",
+  "caméra":"camera-camera","vedette":"stella","star":"stella"
+};
+/* Mots exclusifs : gagnés dans les mini-jeux */
+const BONUS_DICT = {
+  "super":{m:"banana-tastique", game:"quiz"},
+  "d'accord":{m:"okey dokey", game:"quiz"},
+  "chocolat":{m:"choco-choco", game:"flash"},
+  "fraise":{m:"fraga-nana", game:"flash"},
+  "roi":{m:"el rey", game:"match"},
+  "reine":{m:"la reina", game:"match"},
+  "dormir":{m:"ronflo-ronflo", game:"memory"},
+  "licorne":{m:"unicorno", game:"memory"},
+  "mignon":{m:"cute-cute", game:"mystery"},
+  "trésor":{m:"tesoro-nana", game:"mystery"},
+  "à l'attaque":{m:"attacko", game:"builder"},
+  "champion":{m:"campeone", game:"builder"},
+  "génial":{m:"fantastico", game:"tf"},
+  "magique":{m:"magico-poof", game:"tf"},
+  "légende":{m:"legendario", game:"rush"},
+  "incroyable":{m:"bananissimo", game:"rush"}
+};
+
+/* ================== JEUX : définitions ================== */
+const GAMES = [
+  {key:"quiz",    emoji:"⏱️", title:"Quiz chrono",             desc:"30 secondes, 5 bonnes réponses pour gagner.", needLesson:1},
+  {key:"flash",   emoji:"🃏", title:"Flashcards",              desc:"8 cartes à mémoriser. Connais-en 6 pour gagner.", needLesson:2},
+  {key:"match",   emoji:"🧩", title:"Association",             desc:"Relie chaque émoji à son mot en Minionese.", needLesson:3},
+  {key:"memory",  emoji:"🧠", title:"Memory",                  desc:"Retrouve les 6 paires français ↔ Minionese.", needLesson:5},
+  {key:"mystery", emoji:"🔤", title:"Mot mystère",             desc:"Devine le mot lettre par lettre. 6 bananes de vie.", needLesson:6},
+  {key:"builder", emoji:"🧱", title:"Constructeur de phrases", desc:"Remets les mots dans l'ordre. Réussis 2 phrases sur 3.", needLesson:8},
+  {key:"tf",      emoji:"⚡", title:"Vrai ou Faux",            desc:"30 secondes, 8 bonnes réponses. Réflexes obligatoires.", needLesson:9},
+  {key:"rush",    emoji:"⌨️", title:"Banana Rush",             desc:"Tape la traduction au clavier. 5 mots en 45 secondes.", needLesson:11}
+];
+const GAME_NAMES = Object.fromEntries(GAMES.map(g=>[g.key,g.title]));
+function gameBonus(key){ return Object.entries(BONUS_DICT).filter(([,v])=>v.game===key); }
+
+/* ================== RANGS & BADGES ================== */
+const RANKS = [
+  [0,"🍼 Bébé Minion"],[12,"🎒 Apprenti Minion"],[30,"🍌 Minion confirmé"],
+  [55,"🧢 Chef d'équipe"],[85,"🕶️ Bras droit du Boss"],[120,"👑 Roi Banane"]
+];
+const BADGES = [
+  {id:"niv1", em:"🍼", name:"Niveau 1 terminé", desc:"Les 4 leçons débutant validées.", test:()=>[1,2,3,4].every(i=>state.lessonsDone[i])},
+  {id:"niv2", em:"🧢", name:"Niveau 2 terminé", desc:"Les 4 leçons intermédiaires validées.", test:()=>[5,6,7,8].every(i=>state.lessonsDone[i])},
+  {id:"niv3", em:"🎓", name:"Niveau 3 terminé", desc:"Les 5 leçons expert validées.", test:()=>[9,10,11,12,13].every(i=>state.lessonsDone[i])},
+  {id:"star1", em:"⭐", name:"Première étoile", desc:"Gagner ton premier mini-jeu.", test:()=>Object.keys(state.gamesDone).length>=1},
+  {id:"champ", em:"🏆", name:"Grand Champion", desc:"Gagner les 8 mini-jeux.", test:()=>Object.keys(state.gamesDone).length>=8},
+  {id:"poly", em:"🗣️", name:"Polyglotte", desc:"Débloquer les 16 mots exclusifs.", test:()=>state.unlocked.size>=16},
+  {id:"roi", em:"👑", name:"Roi Banane", desc:"Atteindre 120 bananes.", test:()=>state.bananas>=120},
+  {id:"diplome", em:"📜", name:"Diplômé", desc:"13 leçons + 8 jeux : le grade ultime.", test:()=>isComplete()}
+];
+function isComplete(){
+  return ALL_LESSONS.every(l=>state.lessonsDone[l.id]) && Object.keys(state.gamesDone).length>=8;
+}
+</script>
+<script>
+/* ================== NAVIGATION / TOAST / BANANES ================== */
+function go(page){
+  document.querySelectorAll("section.page").forEach(s=>s.classList.remove("visible"));
+  document.getElementById("page-"+page).classList.add("visible");
+  document.querySelectorAll("nav .tab").forEach(t=>t.classList.toggle("active", t.dataset.page===page));
+  window.scrollTo({top:0});
+}
+document.querySelectorAll("nav .tab").forEach(t=>t.addEventListener("click",()=>go(t.dataset.page)));
+
+let toastTimer;
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove("show"),3400);
+}
+function addBananas(n){
+  state.bananas+=n;
+  document.getElementById("bananaCount").textContent=state.bananas;
+  updateRank(); renderBadges();
+  autoSave();
+}
+
+/* ================== RANG ================== */
+function updateRank(){
+  let cur=RANKS[0], next=null;
+  for(const r of RANKS){ if(state.bananas>=r[0]) cur=r; else { next=r; break; } }
+  const pct = next ? Math.min(100, Math.round((state.bananas-cur[0])/(next[0]-cur[0])*100)) : 100;
+  const nextTxt = next ? `Prochain rang : ${next[1]} à ${next[0]} 🍌` : "Rang maximum atteint !";
+  [["rankName","rankNext","rankFill"],["rankName2","rankNext2","rankFill2"]].forEach(([a,b,c])=>{
+    const ea=document.getElementById(a), eb=document.getElementById(b), ec=document.getElementById(c);
+    if(ea) ea.textContent=cur[1];
+    if(eb) eb.textContent=nextTxt;
+    if(ec) ec.style.width=pct+"%";
+  });
+}
+
+/* ================== HERO ================== */
+const ROT=[["Bello","bonjour"],["Poopaye","au revoir"],["Papagena","le bonheur absolu"],["Gelato","glace"],
+["Pwede na?","on peut commencer ?"],["Me mé cassose","je m'en vais"],["Yakitori !","cours !"],
+["Matoka","j'ai faim"],["Tu pues de bras","la chanson YMCA"],["Sa la ka !","comment oses-tu ?!"],
+["Tulaliloo ti amo","nous t'aimons"],["Papagaya","beau / belle"],
+["Shyeh-shyeh","merci (le clin d'œil du film 2026)"],["Toot toot !","en route !"],["Mi amor","mon amour"]];
+let ri=0;
+setInterval(()=>{
+  ri=(ri+1)%ROT.length;
+  const el=document.getElementById("rotator");
+  el.innerHTML=`« <b>${ROT[ri][0]}</b> » veut dire <b>${ROT[ri][1]}</b> !`;
+},2600);
+
+const goggle=document.getElementById("goggle"), iris=document.getElementById("iris");
+document.addEventListener("mousemove",e=>{
+  const r=goggle.getBoundingClientRect();
+  const cx=r.left+r.width/2, cy=r.top+r.height/2;
+  const dx=e.clientX-cx, dy=e.clientY-cy;
+  const d=Math.min(1,Math.hypot(dx,dy)/300), max=r.width*0.14;
+  const a=Math.atan2(dy,dx);
+  iris.style.transform=`translate(${Math.cos(a)*max*d}px,${Math.sin(a)*max*d}px)`;
+});
+setInterval(()=>{goggle.classList.add("blink");setTimeout(()=>goggle.classList.remove("blink"),320);},4200);
+
+/* ================== PARCOURS ================== */
+const openLessons = new Set([1]);
+function renderLessons(){
+  const wrap=document.getElementById("lessonsWrap");
+  wrap.innerHTML=LEVELS.map(lv=>`
+    <div class="level-header"><h3>${lv.name}</h3><span class="level-pill">${lv.pill}</span></div>
+    <div class="lessons">${lv.lessons.map(L=>{
+      const done=!!state.lessonsDone[L.id];
+      const open=openLessons.has(L.id);
+      return `<article class="lesson ${open?"":"collapsed"}" id="lesson-${L.id}">
+        <header onclick="toggleLesson(${L.id})">
+          <span style="font-size:1.6rem">${L.emoji}</span>
+          <h4>Leçon ${L.id} — ${L.title}</h4>
+          <span class="badge ${done?"done":""}">${done?"Terminée ✔":"À faire"}</span>
+          <span class="chev">▾</span>
+        </header>
+        <div class="lesson-body">
+          <p class="intro">${L.intro}</p>
+          <table class="vocab-table">
+            <thead><tr><th>Français</th><th>Minionese</th><th>Origine</th></tr></thead>
+            <tbody>${L.vocab.map(v=>`<tr><td>${v[0]}</td><td class="minion">${v[1]}</td><td class="origin">${v[2]}</td></tr>`).join("")}</tbody>
+          </table>
+          <div class="grammar-box">${L.grammar}</div>
+          <footer>
+            <button class="btn btn-dark" onclick="finishLesson(${L.id})" ${done?"disabled":""}>
+              ${done?"Leçon validée 🍌":"J&rsquo;ai appris cette leçon !"}
+            </button>
+            <span class="reward">${L.reward}</span>
+          </footer>
+        </div>
+      </article>`;
+    }).join("")}</div>`).join("");
+}
+function toggleLesson(id){
+  if(openLessons.has(id)) openLessons.delete(id); else openLessons.add(id);
+  renderLessons();
+}
+function finishLesson(id){
+  if(state.lessonsDone[id]) return;
+  state.lessonsDone[id]=true;
+  const L=ALL_LESSONS.find(l=>l.id===id);
+  addBananas(id===13?5:3);
+  openLessons.delete(id);
+  if(id<13) openLessons.add(id+1);
+  if(L.unlocksGame){
+    toast(`🎉 Leçon ${id} terminée ! Mini-jeu « ${GAME_NAMES[L.unlocksGame]} » débloqué !`);
+  }else if(id===13){
+    toast("🎓 Parcours terminé ! Papagena ! File voir la page Progrès…");
+  }else{
+    toast(`👍 Leçon ${id} validée, tank yu ! La suite t&rsquo;attend.`);
+  }
+  renderAll();
+}
+
+/* ================== JEUX : cartes ================== */
+function renderGames(){
+  const g=document.getElementById("gamesGrid");
+  g.innerHTML=GAMES.map(G=>{
+    const unlocked=!!state.lessonsDone[G.needLesson];
+    const done=!!state.gamesDone[G.key];
+    const bonus=gameBonus(G.key);
+    return `<div class="game-card ${unlocked?"":"locked"}">
+      ${unlocked?"":`<span class="lock" title="Verrouillé">🔒</span>`}
+      <span class="emoji">${G.emoji}</span>
+      <h4>${G.title} ${done?"⭐":""}</h4>
+      <p>${G.desc}</p>
+      <p class="bonus-line">${unlocked
+        ? `Récompense : « ${bonus.map(b=>b[1].m).join(" », « ")} » + 5 🍌`
+        : `Termine la leçon ${G.needLesson} pour débloquer.`}</p>
+      <button class="btn btn-dark btn-sm" style="margin-top:auto;align-self:flex-start"
+        onclick="startGame('${G.key}')" ${unlocked?"":"disabled"}>Jouer</button>
+    </div>`;
+  }).join("");
+}
+function winGame(key){
+  const first=!state.gamesDone[key];
+  state.gamesDone[key]=true;
+  if(first){
+    gameBonus(key).forEach(([fr])=>state.unlocked.add(fr));
+    addBananas(5);
+    toast(`⭐ Victoire ! Mots exclusifs débloqués : « ${gameBonus(key).map(b=>b[1].m).join(" », « ")} » !`);
+  }else{
+    addBananas(2);
+    toast("⭐ Encore gagné ! +2 🍌");
+  }
+  renderAll();
+}
+const stage=document.getElementById("gameStage");
+function closeStage(){ stage.classList.remove("open"); stage.innerHTML=""; clearTimers(); }
+function startGame(key){
+  clearTimers();
+  const starters={quiz:startQuiz, flash:startFlash, match:startMatch, memory:startMemory,
+                  mystery:startMystery, builder:startBuilder, tf:startTF, rush:startRush};
+  starters[key]();
+  stage.classList.add("open");
+  stage.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function endScreen(bodyId, win, msgWin, msgLose, replayFn){
+  document.getElementById(bodyId).innerHTML=`
+    <p class="result-banner">${win?msgWin:msgLose}</p>
+    <div class="game-actions">
+      <button class="btn btn-light" id="replayBtn">Rejouer</button>
+      <button class="btn btn-light" onclick="closeStage()">Fermer</button>
+    </div>`;
+  document.getElementById("replayBtn").addEventListener("click",replayFn);
+}
+
+/* ---------- Jeu 1 : Quiz chrono ---------- */
+const QUIZ_POOL = ALL_LESSONS.flatMap(L=>L.vocab.map(v=>[v[0],v[1]]));
+let qTime,qScore,qCurrent;
+function startQuiz(){
+  clearTimers(); qTime=30; qScore=0;
+  stage.innerHTML=`<h3>⏱️ Quiz chrono</h3>
+    <p class="rules">Traduis vite ! 5 bonnes réponses avant la fin du chrono.</p>
+    <div class="game-hud"><span>Temps : <b id="qTime">30</b>s</span><span>Score : <b id="qScore">0</b>/5</span></div>
+    <div id="qBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+  nextQuiz();
+  TIMERS.push(setInterval(()=>{
+    qTime--; const el=document.getElementById("qTime"); if(el) el.textContent=qTime;
+    if(qTime<=0){ clearTimers(); endQuiz(); }
+  },1000));
+}
+function nextQuiz(){
+  if(qScore>=5){ clearTimers(); endQuiz(); return; }
+  const pick=QUIZ_POOL[Math.floor(Math.random()*QUIZ_POOL.length)];
+  const opts=new Set([pick[1]]);
+  while(opts.size<4) opts.add(QUIZ_POOL[Math.floor(Math.random()*QUIZ_POOL.length)][1]);
+  qCurrent={fr:pick[0], ok:pick[1], opts:[...opts].sort(()=>Math.random()-.5)};
+  document.getElementById("qBody").innerHTML=`
+    <p class="quiz-q">Comment dit-on « ${qCurrent.fr} » ?</p>
+    <div class="quiz-opts">${qCurrent.opts.map((o,i)=>`<button onclick="answerQuiz(this,${i})">${o}</button>`).join("")}</div>`;
+}
+function answerQuiz(btn,i){
+  if(qCurrent.opts[i]===qCurrent.ok){
+    btn.classList.add("good"); qScore++;
+    const el=document.getElementById("qScore"); if(el) el.textContent=qScore;
+    setTimeout(nextQuiz,420);
+  }else{
+    btn.classList.add("bad"); btn.disabled=true;
+  }
+}
+function endQuiz(){
+  const win=qScore>=5;
+  endScreen("qBody",win,`🎉 GAGNÉ ! ${qScore} bonnes réponses !`,`😅 Bi-do ! ${qScore}/5 seulement… Réessaie !`,startQuiz);
+  if(win) winGame("quiz");
+}
+
+/* ---------- Jeu 2 : Flashcards ---------- */
+const FLASH=[["Banana","Banane 🍌"],["Gelato","Glace 🍨"],["Poopaye","Au revoir 👋"],["Tank yu","Merci 🙏"],
+             ["Papoy","Jouet 🧸"],["Bello","Bonjour 😀"],["Kampai","Santé ! 🥂"],["Bapple","Pomme 🍎"],
+             ["Matoka","J&rsquo;ai faim 😋"],["Yakitori!","Cours ! 🏃"],["Baduga","Danger ⚠️"],["Papagaya","Beau / Belle ✨"],
+             ["Yam yam!","Délicieux ! 🤤"],["Ku ga!","Hourra ! 🎉"],["Pekang","Attends ✋"],["Comarino","Maison 🏠"]];
+let fIdx,fKnown,fDeck;
+function startFlash(){
+  clearTimers(); fIdx=0; fKnown=0; fDeck=[...FLASH].sort(()=>Math.random()-.5).slice(0,8);
+  stage.innerHTML=`<h3>🃏 Flashcards</h3>
+    <p class="rules">Retourne chaque carte, puis sois honnête : la connaissais-tu ? 6 sur 8 pour gagner.</p>
+    <div class="game-hud"><span>Carte <b id="fIdx">1</b>/8</span><span>Connues : <b id="fKnown">0</b></span></div>
+    <div id="fBody"></div>`;
+  renderFlash();
+}
+function renderFlash(){
+  if(fIdx>=fDeck.length){
+    const win=fKnown>=6;
+    endScreen("fBody",win,`🎉 GAGNÉ ! ${fKnown} cartes connues !`,`😅 ${fKnown}/8… il en faut 6. Retour à la leçon 2 !`,startFlash);
+    if(win) winGame("flash");
+    return;
+  }
+  const c=fDeck[fIdx];
+  document.getElementById("fIdx").textContent=fIdx+1;
+  document.getElementById("fBody").innerHTML=`
+    <div class="flashcard" onclick="this.classList.toggle('flipped')" role="button" tabindex="0" aria-label="Retourner la carte">
+      <div class="inner">
+        <div class="face front">${c[0]}<span class="hint">(touche pour retourner)</span></div>
+        <div class="face back">${c[1]}</div>
+      </div>
+    </div>
+    <div class="game-actions">
+      <button class="btn btn-light" onclick="flashNext(true)">✅ Je connaissais</button>
+      <button class="btn btn-light" onclick="flashNext(false)">❌ Pas encore</button>
+    </div>`;
+}
+function flashNext(known){
+  if(known) fKnown++;
+  const el=document.getElementById("fKnown"); if(el) el.textContent=fKnown;
+  fIdx++; renderFlash();
+}
+
+/* ---------- Jeu 3 : Association ---------- */
+let mSel,mFound;
+const MATCH_ALL=[["🍌","Banana"],["🍨","Gelato"],["👋","Poopaye"],["💍","La boda"],["🏠","Comarino"],
+  ["👑","Crona"],["💣","Bomba"],["🐶","Puppy"],["🎁","Regalo"],["🎵","Musica"],["🪑","Chasy"],["🧸","Papoy"]];
+function startMatch(){
+  clearTimers(); mSel=null; mFound=0;
+  const MATCH=[...MATCH_ALL].sort(()=>Math.random()-.5).slice(0,4);
+  const tiles=[];
+  MATCH.forEach((p,i)=>{tiles.push({t:p[0],pair:i,e:true});tiles.push({t:p[1],pair:i,e:false});});
+  tiles.sort(()=>Math.random()-.5);
+  stage.innerHTML=`<h3>🧩 Association</h3>
+    <p class="rules">Touche un émoji puis son mot en Minionese (ou l&rsquo;inverse).</p>
+    <div class="game-hud"><span>Paires : <b id="mFound">0</b>/4</span></div>
+    <div class="match-grid">${tiles.map((t,i)=>`<button data-pair="${t.pair}" data-i="${i}" onclick="pickMatch(this)">${t.e?t.t:`<span class="small">${t.t}</span>`}</button>`).join("")}</div>
+    <div id="mBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+}
+function pickMatch(btn){
+  if(btn.classList.contains("found")) return;
+  if(mSel===btn){btn.classList.remove("sel");mSel=null;return;}
+  if(!mSel){mSel=btn;btn.classList.add("sel");return;}
+  if(mSel.dataset.pair===btn.dataset.pair && mSel.dataset.i!==btn.dataset.i){
+    mSel.classList.remove("sel");
+    mSel.classList.add("found"); btn.classList.add("found");
+    mFound++; document.getElementById("mFound").textContent=mFound;
+    mSel=null;
+    if(mFound===4){
+      document.getElementById("mBody").innerHTML=`<p class="result-banner">🎉 GAGNÉ ! Les 4 paires trouvées !</p>`;
+      winGame("match");
+    }
+  }else{
+    const a=mSel; a.classList.remove("sel"); mSel=null;
+    a.style.background="var(--rouge)"; btn.style.background="var(--rouge)";
+    setTimeout(()=>{a.style.background="";btn.style.background="";},420);
+  }
+}
+
+/* ---------- Jeu 4 : Memory ---------- */
+const MEMORY_ALL=[["🍌 Banane","Banana"],["🥂 Santé !","Kampai"],["🧸 Jouet","Papoy"],
+  ["🎉 Fête","Fiesta"],["💰 Argent","Moni"],["🎁 Cadeau","Regalo"],["⚠️ Danger","Baduga"],
+  ["🏃 Cours !","Yakitori"],["😋 J&rsquo;ai faim","Matoka"],["🏠 Maison","Comarino"],
+  ["👑 Couronne","Crona"],["✨ Beau","Papagaya"]];
+let memFirst,memLock,memWon,memMoves;
+function startMemory(){
+  clearTimers(); memFirst=null; memLock=false; memWon=0; memMoves=0;
+  const MEMORY_PAIRS=[...MEMORY_ALL].sort(()=>Math.random()-.5).slice(0,6);
+  const cards=[];
+  MEMORY_PAIRS.forEach((p,i)=>{cards.push({t:p[0],pair:i});cards.push({t:p[1],pair:i});});
+  cards.sort(()=>Math.random()-.5);
+  stage.innerHTML=`<h3>🧠 Memory</h3>
+    <p class="rules">Retourne les cartes deux par deux et retrouve les 6 paires français ↔ Minionese.</p>
+    <div class="game-hud"><span>Paires : <b id="memWon">0</b>/6</span><span>Coups : <b id="memMoves">0</b></span></div>
+    <div class="mem-grid">${cards.map((c,i)=>`<button data-pair="${c.pair}" data-i="${i}" onclick="flipMem(this)"><span class="em">${c.t}</span></button>`).join("")}</div>
+    <div id="memBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="startMemory()">Recommencer</button>
+    <button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+}
+function flipMem(btn){
+  if(memLock||btn.classList.contains("up")||btn.classList.contains("won")) return;
+  btn.classList.add("up");
+  if(!memFirst){ memFirst=btn; return; }
+  memMoves++; document.getElementById("memMoves").textContent=memMoves;
+  if(memFirst.dataset.pair===btn.dataset.pair){
+    memFirst.classList.add("won"); btn.classList.add("won");
+    memFirst=null; memWon++;
+    document.getElementById("memWon").textContent=memWon;
+    if(memWon===6){
+      document.getElementById("memBody").innerHTML=`<p class="result-banner">🎉 GAGNÉ en ${memMoves} coups !</p>`;
+      winGame("memory");
+    }
+  }else{
+    memLock=true;
+    const a=memFirst; memFirst=null;
+    setTimeout(()=>{a.classList.remove("up");btn.classList.remove("up");memLock=false;},700);
+  }
+}
+
+/* ---------- Jeu 5 : Mot mystère ---------- */
+const MYSTERY=[["BANANA","La nourriture sacrée 🍌"],["GELATO","Un dessert glacé 🍨"],["POOPAYE","Pour dire au revoir 👋"],
+               ["BAPPLE","Un fruit croquant 🍎"],["KAMPAI","Pour trinquer 🥂"],["FIESTA","On y danse toute la nuit 🎉"],
+               ["PAPAGENA","Le bonheur absolu ✨"],["TROPA","En avant l&rsquo;équipe ! 🏃"],
+               ["YAKITORI","Cours ! (et aussi une brochette japonaise) 🏃"],["MATOKA","Le ventre gargouille 😋"],
+               ["BADUGA","Attention, ça va exploser ⚠️"],["COMARINO","On y dort, on y mange 🏠"],
+               ["PAPAGAYA","Le plus beau des compliments ✨"],["BULAKA","Qu&rsquo;est-ce qui se passe ici ? 🤨"],
+               ["MELOMO","Viens ici, ici ! 👈"],["POPADOM","La question devant le miroir 🪞"],
+               ["TELEFONO","Dring dring ! (film 2026) ☎️"],["CARBONARA","Des pâtes de star (film 2026) 🍝"],
+               ["PIGNATA","La fête surprise (film 2026) 🎊"],["GOOMI","Le monstre pas si effrayant (film 2026) 👾"]];
+let mysWord,mysHint,mysFound,mysLives;
+function startMystery(){
+  clearTimers();
+  const pick=MYSTERY[Math.floor(Math.random()*MYSTERY.length)];
+  mysWord=pick[0]; mysHint=pick[1]; mysFound=new Set(); mysLives=6;
+  stage.innerHTML=`<h3>🔤 Mot mystère</h3>
+    <p class="rules">Indice : ${mysHint}</p>
+    <div class="mystery-lives" id="mysLives"></div>
+    <div class="mystery-word" id="mysWord"></div>
+    <div class="kbd" id="mysKbd">${"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map(l=>`<button onclick="guessLetter(this,'${l}')">${l}</button>`).join("")}</div>
+    <div id="mysBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="startMystery()">Nouveau mot</button>
+    <button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+  drawMystery();
+}
+function drawMystery(){
+  document.getElementById("mysWord").textContent=mysWord.split("").map(l=>mysFound.has(l)?l:"_").join(" ");
+  document.getElementById("mysLives").textContent="🍌".repeat(mysLives)+"🖤".repeat(6-mysLives);
+}
+function guessLetter(btn,l){
+  btn.disabled=true;
+  if(mysWord.includes(l)){
+    mysFound.add(l); btn.classList.add("good");
+    drawMystery();
+    if(mysWord.split("").every(c=>mysFound.has(c))){
+      document.getElementById("mysBody").innerHTML=`<p class="result-banner">🎉 GAGNÉ ! C&rsquo;était bien « ${mysWord} » !</p>`;
+      document.getElementById("mysKbd").querySelectorAll("button").forEach(b=>b.disabled=true);
+      winGame("mystery");
+    }
+  }else{
+    mysLives--; btn.classList.add("bad");
+    drawMystery();
+    if(mysLives<=0){
+      document.getElementById("mysBody").innerHTML=`<p class="result-banner">😭 Plus de bananes… Le mot était « ${mysWord} ». Réessaie !</p>`;
+      document.getElementById("mysKbd").querySelectorAll("button").forEach(b=>b.disabled=true);
+    }
+  }
+}
+
+/* ---------- Jeu 6 : Constructeur de phrases ---------- */
+const SENTENCES=[
+  {fr:"Bonjour, je veux une banane !", words:["bello","me","want","banana"]},
+  {fr:"Merci pour la glace, au revoir !", words:["tank","yu","para","gelato","poopaye"]},
+  {fr:"Nous t&rsquo;aimons, gros bisous !", words:["tulaliloo","ti","amo","muak","muak"]},
+  {fr:"Au feu, vite vite !", words:["bee","do","bee","do","rapido"]},
+  {fr:"Danger ! Une bombe ! Cours !", words:["baduga","bomba","yakitori"]},
+  {fr:"Regarde-toi, tu es beau !", words:["luk","at","tu","papagaya"]},
+  {fr:"J&rsquo;ai faim, ça va être délicieux !", words:["matoka","yam","yam"]},
+  {fr:"On a gagné, hourra, dans ta face !", words:["kum-ba-ya","ku","ga","boo-ya"]}
+];
+let bRounds,bIdx,bScore,bTarget,bPool;
+function startBuilder(){
+  clearTimers();
+  bRounds=[...SENTENCES].sort(()=>Math.random()-.5).slice(0,3);
+  bIdx=0; bScore=0;
+  stage.innerHTML=`<h3>🧱 Constructeur de phrases</h3>
+    <p class="rules">Remets les mots en Minionese dans le bon ordre. Réussis 2 phrases sur 3.</p>
+    <div class="game-hud"><span>Phrase <b id="bIdx">1</b>/3</span><span>Réussies : <b id="bScore">0</b></span></div>
+    <div id="bBody"></div>`;
+  renderBuilder();
+}
+function renderBuilder(){
+  if(bIdx>=3){
+    const win=bScore>=2;
+    endScreen("bBody",win,`🎉 GAGNÉ ! ${bScore} phrases sur 3 !`,`😅 ${bScore}/3… il en faut 2. Encore un essai ?`,startBuilder);
+    if(win) winGame("builder");
+    return;
+  }
+  const s=bRounds[bIdx];
+  bTarget=[]; bPool=s.words.map((w,i)=>({w,i})).sort(()=>Math.random()-.5);
+  document.getElementById("bIdx").textContent=bIdx+1;
+  document.getElementById("bBody").innerHTML=`
+    <p class="quiz-q">« ${s.fr} »</p>
+    <div class="builder-target" id="bTargetEl" aria-label="Ta phrase"></div>
+    <div class="builder-pool" id="bPoolEl"></div>
+    <div class="game-actions">
+      <button class="btn btn-light" onclick="checkBuilder()">Vérifier</button>
+      <button class="btn btn-light" onclick="renderBuilder()">Vider</button>
+    </div>
+    <div id="bMsg"></div>`;
+  drawBuilder();
+}
+function drawBuilder(){
+  document.getElementById("bTargetEl").innerHTML=bTarget.map((c,pos)=>`<button class="word-chip" onclick="unpick(${pos})">${c.w}</button>`).join("");
+  document.getElementById("bPoolEl").innerHTML=bPool.map((c,pos)=>`<button class="word-chip" onclick="pick(${pos})">${c.w}</button>`).join("");
+}
+function pick(pos){ bTarget.push(bPool.splice(pos,1)[0]); drawBuilder(); }
+function unpick(pos){ bPool.push(bTarget.splice(pos,1)[0]); drawBuilder(); }
+function checkBuilder(){
+  const s=bRounds[bIdx];
+  const good=bTarget.map(c=>c.w).join(" ")===s.words.join(" ");
+  if(good){ bScore++; document.getElementById("bScore").textContent=bScore; }
+  document.getElementById("bMsg").innerHTML=`<p class="result-banner">${good?"✅ Parfait ! ":"❌ Presque… la bonne phrase était : « "+s.words.join(" ")+" »."}</p>`;
+  bIdx++;
+  setTimeout(renderBuilder,1400);
+}
+
+/* ---------- Jeu 7 : Vrai ou Faux ---------- */
+let tfTime,tfScore,tfCurrent;
+function startTF(){
+  clearTimers(); tfTime=30; tfScore=0;
+  stage.innerHTML=`<h3>⚡ Vrai ou Faux</h3>
+    <p class="rules">30 secondes, 8 bonnes réponses. La traduction affichée est-elle correcte ?</p>
+    <div class="game-hud"><span>Temps : <b id="tfTime">30</b>s</span><span>Score : <b id="tfScore">0</b>/8</span></div>
+    <div id="tfBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+  nextTF();
+  TIMERS.push(setInterval(()=>{
+    tfTime--; const el=document.getElementById("tfTime"); if(el) el.textContent=tfTime;
+    if(tfTime<=0){ clearTimers(); endTF(); }
+  },1000));
+}
+function nextTF(){
+  if(tfScore>=8){ clearTimers(); endTF(); return; }
+  const a=QUIZ_POOL[Math.floor(Math.random()*QUIZ_POOL.length)];
+  const truth=Math.random()<.5;
+  let shown=a[1];
+  if(!truth){
+    let b;
+    do{ b=QUIZ_POOL[Math.floor(Math.random()*QUIZ_POOL.length)]; }while(b[1]===a[1]);
+    shown=b[1];
+  }
+  tfCurrent={truth};
+  document.getElementById("tfBody").innerHTML=`
+    <p class="quiz-q">« ${a[0]} » se dit « ${shown} »</p>
+    <div class="tf-opts">
+      <button onclick="answerTF(this,true)">✅ VRAI</button>
+      <button onclick="answerTF(this,false)">❌ FAUX</button>
+    </div>`;
+}
+function answerTF(btn,choice){
+  if(choice===tfCurrent.truth){
+    btn.classList.add("good"); tfScore++;
+    const el=document.getElementById("tfScore"); if(el) el.textContent=tfScore;
+    setTimeout(nextTF,300);
+  }else{
+    btn.classList.add("bad");
+    setTimeout(nextTF,500);
+  }
+}
+function endTF(){
+  const win=tfScore>=8;
+  endScreen("tfBody",win,`🎉 GAGNÉ ! ${tfScore} bonnes réponses éclair !`,`😅 ${tfScore}/8… tes réflexes minions doivent chauffer encore un peu !`,startTF);
+  if(win) winGame("tf");
+}
+
+/* ---------- Jeu 8 : Banana Rush ---------- */
+const RUSH_POOL=[["banane","banana"],["bonjour","bello"],["au revoir","poopaye"],["glace","gelato"],
+  ["pomme","bapple"],["jouet","papoy"],["oui","si"],["non","no"],["stop","stopa"],["ami","buddy"],
+  ["santé","kampai"],["chef","boss"],["maman","mama"],["fête","fiesta"],["musique","musica"],
+  ["argent","moni"],["vite","rapido"],["merci","tank yu"],["danger","baduga"],["maison","comarino"],
+  ["couronne","crona"],["chiot","puppy"],["cours !","yakitori"],["attends","pekang"],
+  ["bombe","bomba"],["cadeau","regalo"],["quoi ?","po ka"],["j'ai faim","matoka"],["téléphone","teléfono"],
+  ["mon amour","mi amor"],["lasagnes","lasagna"],["monstre","goomi"]];
+let rTime,rScore,rCurrent;
+function startRush(){
+  clearTimers(); rTime=45; rScore=0;
+  stage.innerHTML=`<h3>⌨️ Banana Rush</h3>
+    <p class="rules">Tape la traduction en Minionese et valide. 5 mots en 45 secondes !</p>
+    <div class="game-hud"><span>Temps : <b id="rTime">45</b>s</span><span>Score : <b id="rScore">0</b>/5</span></div>
+    <div id="rBody"></div>
+    <div class="game-actions"><button class="btn btn-light" onclick="closeStage()">Quitter</button></div>`;
+  nextRush();
+  TIMERS.push(setInterval(()=>{
+    rTime--; const el=document.getElementById("rTime"); if(el) el.textContent=rTime;
+    if(rTime<=0){ clearTimers(); endRush(); }
+  },1000));
+}
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim(); }
+function nextRush(){
+  if(rScore>=5){ clearTimers(); endRush(); return; }
+  rCurrent=RUSH_POOL[Math.floor(Math.random()*RUSH_POOL.length)];
+  document.getElementById("rBody").innerHTML=`
+    <p class="quiz-q">Traduis : « ${rCurrent[0]} »</p>
+    <input class="rush-input" id="rushInput" autocomplete="off" placeholder="Ta réponse en Minionese…">
+    <div class="game-actions">
+      <button class="btn btn-light" onclick="checkRush()">Valider</button>
+      <button class="btn btn-light" onclick="nextRush()">Passer</button>
+    </div>
+    <div id="rMsg"></div>`;
+  const inp=document.getElementById("rushInput");
+  inp.focus();
+  inp.addEventListener("keydown",e=>{ if(e.key==="Enter") checkRush(); });
+}
+function checkRush(){
+  const val=norm(document.getElementById("rushInput").value);
+  if(!val) return;
+  if(val===norm(rCurrent[1])){
+    rScore++;
+    const el=document.getElementById("rScore"); if(el) el.textContent=rScore;
+    document.getElementById("rMsg").innerHTML=`<p class="result-banner">✅ Bravo-nana !</p>`;
+    setTimeout(nextRush,400);
+  }else{
+    document.getElementById("rMsg").innerHTML=`<p class="result-banner">❌ Non… c&rsquo;était « ${rCurrent[1]} ». Mot suivant !</p>`;
+    setTimeout(nextRush,900);
+  }
+}
+function endRush(){
+  const win=rScore>=5;
+  endScreen("rBody",win,`🎉 GAGNÉ ! ${rScore} mots tapés sans trembler !`,`😅 ${rScore}/5… tes doigts parlent presque Minionese !`,startRush);
+  if(win) winGame("rush");
+}
+</script>
+<script>
+/* ================== TRADUCTEUR HYBRIDE (IA + moteur local) ================== */
+let tradMode="ai";           // "ai" ou "local"
+let tradDir="fr2mi";         // "fr2mi" ou "mi2fr"
+let translating=false;
+/* URL du Worker Cloudflare (voir worker/). À adapter après le déploiement. */
+const TRANSLATE_API="https://minionese-api.endam-digital.com/translate";
+
+function setMode(m){
+  tradMode=m;
+  document.getElementById("modeAI").classList.toggle("on",m==="ai");
+  document.getElementById("modeLocal").classList.toggle("on",m==="local");
+}
+function toggleDir(){
+  tradDir = tradDir==="fr2mi" ? "mi2fr" : "fr2mi";
+  const fr2mi = tradDir==="fr2mi";
+  document.getElementById("dirBtn").textContent = fr2mi ? "🇫🇷 Français → 🍌 Minionese" : "🍌 Minionese → 🇫🇷 Français";
+  document.getElementById("inputLabel").textContent = fr2mi ? "Ton texte en français :" : "Ton texte en Minionese :";
+  document.getElementById("frInput").placeholder = fr2mi
+    ? "Ex. : Bonjour ! Je veux une banane et une glace, merci. Au revoir !"
+    : "Ex. : Bello ! Me want banana, tank yu. Poopaye !";
+  document.getElementById("output").innerHTML = `<span class="placeholder">La traduction ${fr2mi?"en Minionese":"en français"} apparaîtra ici…</span>`;
+}
+
+function activeDict(){
+  const d={...BASE_DICT};
+  for(const [k,v] of Object.entries(BONUS_DICT)){
+    if(state.unlocked.has(k)) d[k]=v.m;
+  }
+  return d;
+}
+
+/* --- Moteur local : substitution par dictionnaire (repli hors ligne) --- */
+function localTranslate(input){
+  const dict=activeDict();
+  let pairs=Object.entries(dict);
+  if(tradDir==="mi2fr"){
+    const seen=new Set();
+    pairs=pairs.map(([fr,mi])=>[mi,fr]).filter(([mi])=>{
+      if(seen.has(mi)) return false; seen.add(mi); return true;
+    });
+  }
+  pairs.sort((a,b)=>b[0].length-a[0].length);
+  let text=input;
+  pairs.forEach(([from,to])=>{
+    const esc=from.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const re=new RegExp("(^|[^\\p{L}])("+esc+")(?=[^\\p{L}]|$)","giu");
+    text=text.replace(re,(all,pre,word)=>{
+      let rep=to;
+      if(word[0]===word[0].toUpperCase()&&word[0]!==word[0].toLowerCase())
+        rep=rep[0].toUpperCase()+rep.slice(1);
+      return pre+rep;
+    });
+  });
+  if(tradDir==="fr2mi" && !/[!?.]$/.test(text)) text+=" !";
+  return text;
+}
+
+/* --- Moteur IA : reformulation complète dans le style Minion --- */
+async function aiTranslate(input){
+  const dict=activeDict();
+  const lexique=Object.entries(dict).map(([fr,mi])=>fr+" = "+mi).join(" ; ");
+  const response=await fetch(TRANSLATE_API,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({text:input, direction:tradDir, lexique})
+  });
+  if(!response.ok) throw new Error("HTTP "+response.status);
+  const data=await response.json();
+  const text=(data.translation||"").trim();
+  if(!text) throw new Error("réponse vide");
+  return text;
+}
+
+async function translateText(){
+  if(translating) return;
+  const input=document.getElementById("frInput").value.trim();
+  const out=document.getElementById("output");
+  const btn=document.getElementById("translateBtn");
+  if(!input){ out.innerHTML=`<span class="placeholder">Écris d&rsquo;abord quelque chose… banana ?</span>`; return; }
+
+  if(tradMode==="local"){
+    out.classList.remove("loading");
+    out.textContent=localTranslate(input);
+    return;
+  }
+  /* Mode IA avec repli automatique sur le moteur local */
+  translating=true; btn.disabled=true;
+  out.classList.add("loading");
+  out.textContent="🤖 Le Minion traducteur réfléchit… (po ka ? po ka ?)";
+  try{
+    const text=await aiTranslate(input);
+    out.classList.remove("loading");
+    out.textContent=text;
+  }catch(e){
+    out.classList.remove("loading");
+    out.textContent=localTranslate(input);
+    toast("⚙️ IA indisponible ici : le moteur local a pris le relais !");
+  }finally{
+    translating=false; btn.disabled=false;
+  }
+}
+const RANDOM_SENTENCES=[
+  "Bonjour ! Je veux une banane et une glace, merci beaucoup.",
+  "Regarde ! Le chef arrive, vite vite, au travail !",
+  "Nous t'aimons maman, gros bisous et bonne fête !",
+  "Au feu ! Oh non ! Stop ! Pardon chef, c'était un accident.",
+  "Un, deux, trois bananes pour toi mon ami. Santé !",
+  "On peut commencer ? Oui ! La musique, la danse, la fête !",
+  "Danger ! Une bombe dans la maison ! Cours ! Cours !",
+  "Que s'est-il passé ? Oups… pardon chef, je m'en vais.",
+  "Regarde-toi, tu es beau ! Comme c'est mignon, gros bisous !",
+  "J'ai faim ! Un poulet, une papaye et beaucoup de bananes, délicieux !",
+  "Le roi arrive avec la couronne, hourra ! On a gagné, dans ta face !",
+  "Attends ! Où est mon jouet ? Là-bas ! Prends, merci beaucoup !"
+];
+const MINION_SENTENCES=[
+  "Bello ! Que pasa ? Me want banana, por favor !",
+  "Uh-oh… baduga ! Bomba ! Yakitori, yakitori !",
+  "Tulaliloo ti amo mama, muak muak muak !",
+  "Pwede na ? Si si ! Fiesta, musica, danza, wee-hee !",
+  "Luk at tu, papagaya ! Ho cue, he-he-he !",
+  "Matoka… gelato para tu ? Yam yam ! Trema kasih !"
+];
+function randomSentence(){
+  const pool = tradDir==="fr2mi" ? RANDOM_SENTENCES : MINION_SENTENCES;
+  const s=pool[Math.floor(Math.random()*pool.length)];
+  document.getElementById("frInput").value=s;
+  translateText();
+}
+function copyOutput(){
+  const t=document.getElementById("output").textContent;
+  if(!t||t.includes("apparaîtra")){ toast("Rien à copier pour le moment !"); return; }
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(t).then(()=>toast("Copié ! Tank yu 🍌")).catch(()=>toast("Copie impossible ici, bi-do."));
+  }else{ toast("Copie impossible ici, bi-do."); }
+}
+function speakOutput(){
+  const t=document.getElementById("output").textContent;
+  if(!t||t.includes("apparaîtra")){ toast("Traduis d&rsquo;abord une phrase !".replace("&rsquo;","'")); return; }
+  if(!("speechSynthesis" in window)){ toast("Synthèse vocale non disponible, bi-do."); return; }
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang="it-IT"; u.pitch=1.9; u.rate=1.15;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+function renderDico(){
+  const wrap=document.getElementById("dicoChips");
+  const q=(document.getElementById("dicoSearch").value||"").toLowerCase();
+  const match=(fr,m)=>!q||fr.toLowerCase().includes(q)||m.toLowerCase().includes(q);
+  const base=Object.entries(BASE_DICT).filter(([fr,m])=>match(fr,m))
+    .map(([fr,m])=>`<span class="chip">${fr} → <b>${m}</b></span>`);
+  const bonus=Object.entries(BONUS_DICT).filter(([fr,v])=>match(fr,v.m)).map(([fr,v])=>{
+    const ok=state.unlocked.has(fr);
+    return `<span class="chip ${ok?"":"locked"}" title="${ok?"Débloqué !":"Gagne le jeu « "+GAME_NAMES[v.game]+" »"}">${ok?"⭐":"🔒"} ${fr} → <b>${v.m}</b></span>`;
+  });
+  wrap.innerHTML=base.join("")+bonus.join("");
+  document.getElementById("dicoCount").textContent=Object.keys(BASE_DICT).length+Object.keys(BONUS_DICT).length;
+}
+
+/* ================== PROGRÈS ================== */
+function renderBadges(){
+  const g=document.getElementById("badgesGrid");
+  g.innerHTML=BADGES.map(b=>{
+    const ok=b.test();
+    return `<div class="badge-card ${ok?"":"off"}">
+      <span class="em">${b.em}</span>
+      <h4>${b.name}</h4>
+      <p>${b.desc}</p>
+      <p style="font-weight:800;margin-top:6px">${ok?"✅ Obtenu":"🔒 À gagner"}</p>
+    </div>`;
+  }).join("");
+  document.getElementById("diploma").style.display=isComplete()?"block":"none";
+}
+function renderStats(){
+  document.getElementById("stLessons").textContent=Object.keys(state.lessonsDone).length+"/13";
+  document.getElementById("stGames").textContent=Object.keys(state.gamesDone).length+"/8";
+  document.getElementById("stWords").textContent=state.unlocked.size;
+  document.getElementById("stBananas").textContent=state.bananas;
+}
+
+/* ================== SAUVEGARDE (automatique + code copiable) ================== */
+const SAVE_KEY="minionese-academy-v1";
+function serializeState(){
+  return { b:state.bananas, l:Object.keys(state.lessonsDone).map(Number),
+           g:Object.keys(state.gamesDone), u:[...state.unlocked] };
+}
+function applyState(data){
+  state.bananas=data.b||0;
+  state.lessonsDone={}; (data.l||[]).forEach(i=>state.lessonsDone[i]=true);
+  state.gamesDone={}; (data.g||[]).forEach(k=>state.gamesDone[k]=true);
+  state.unlocked=new Set(data.u||[]);
+  document.getElementById("bananaCount").textContent=state.bananas;
+}
+/* Sauvegarde locale : silencieuse si le navigateur la bloque (navigation privée…) */
+function autoSave(){
+  try{ localStorage.setItem(SAVE_KEY, JSON.stringify(serializeState())); }catch(e){}
+}
+function autoLoad(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    if(raw){ applyState(JSON.parse(raw)); return true; }
+  }catch(e){}
+  return false;
+}
+function exportSave(){
+  const code=btoa(unescape(encodeURIComponent(JSON.stringify(serializeState()))));
+  document.getElementById("saveArea").value=code;
+  toast("Code généré ! Copie-le précieusement 🍌");
+}
+function importSave(){
+  const code=document.getElementById("saveArea").value.trim();
+  if(!code){ toast("Colle un code de sauvegarde dans la zone !"); return; }
+  try{
+    applyState(JSON.parse(decodeURIComponent(escape(atob(code)))));
+    renderAll();
+    toast("Progression restaurée ! Bello à nouveau 🍌");
+  }catch(e){
+    toast("Code invalide, bi-do… Vérifie le copier-coller.");
+  }
+}
+/* Remise à zéro en deux clics (pas de confirm() : bloqué dans certains contextes) */
+let resetArmed=null;
+function resetProgress(btn){
+  if(!resetArmed){
+    btn.textContent="Sûr ? Clique encore pour tout effacer";
+    resetArmed=setTimeout(()=>{ resetArmed=null; btn.textContent="Recommencer à zéro"; },4000);
+    return;
+  }
+  clearTimeout(resetArmed); resetArmed=null; btn.textContent="Recommencer à zéro";
+  applyState({});
+  renderAll();
+  toast("Tout est effacé. Bello, nouveau Minion ! 🍼");
+}
+
+/* ================== INIT ================== */
+function renderAll(){
+  renderLessons(); renderGames(); renderDico(); renderBadges(); renderStats(); updateRank();
+  autoSave();
+}
+const restored=autoLoad();
+renderAll();
+if(restored && state.bananas>0) setTimeout(()=>toast("Bello ! Ta progression est revenue 🍌"),600);
+</script>
+</body>
+</html>

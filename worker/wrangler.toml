@@ -1,0 +1,23 @@
+name = "minionese-api"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# Domaine personnalisé du Worker (la zone endam-digital.com doit être sur Cloudflare)
+routes = [
+  { pattern = "minionese-api.endam-digital.com", custom_domain = true }
+]
+
+[vars]
+# Origines autorisées à appeler le traducteur (virgules, sans slash final)
+ALLOWED_ORIGINS = "https://minionese.endam-digital.com,http://localhost:8080"
+MODEL = "claude-haiku-4-5-20251001"
+
+# 10 traductions par minute et par IP
+[[ratelimits]]
+name = "LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
