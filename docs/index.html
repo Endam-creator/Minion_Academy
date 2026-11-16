@@ -657,21 +657,20 @@ const LEVELS = [
     },
     {
       id:13, emoji:"🎬", title:"Le cinéma & les monstres — le film de 2026",
-      intro:"« Des Minions et des monstres » (2026) envoie les Minions dans le Hollywood des années 1920, en plein cinéma muet. Pierre Coffin, qui réalise le film et double les Minions, y enrichit la langue de nouveaux mots. On y suit un nouveau trio, James, Henry et Ed, qui deviennent des stars en chassant les monstres, puis tentent leur retour avec leur propre film de monstres quand arrive le cinéma parlant.",
+      intro:"« Des Minions et des monstres » (2026) envoie les Minions dans le Hollywood de 1927, juste avant l'arrivée du cinéma parlant. On y suit un nouveau trio : James, qui rêve de raconter des histoires, son meilleur ami Henry, et Ed, qui parle en langue des signes. Devenus des stars du muet, ils perdent tout quand les films deviennent parlants, car personne ne comprend le Minionese ! Tous les mots de cette leçon sont entendus dans le film (sous-titres officiels).",
       vocab:[
-        ["Le téléphone","Teléfono","espagnol — entendu dans le film"],
-        ["Mon amour","Mi amor","espagnol — entendu dans le film"],
-        ["Merci (clin d'œil final)","Shyeh-shyeh","chinois « xièxie », glissé par Pierre Coffin à la toute fin du film"],
-        ["Le grand chef (version latino)","Gran Jefe","« Big Boss » réenregistré pour l'Amérique latine"],
-        ["Les pâtes / le régal","Carbonara","VF 2026 — il faut tendre l'oreille"],
-        ["Les lasagnes","Lasagna","VF 2026"],
-        ["La fête surprise","Pignata","VF 2026, de « piñata »"],
-        ["Le footballeur / le champion","Mbappé","VF 2026 — oui oui, authentique !"],
-        ["Le boulet","Casos","VF 2026, argot français"],
-        ["En route ! (klaxon)","Toot toot!","VF 2026"],
-        ["Le monstre (pas si effrayant)","Goomi","la créature du film, clin d'œil à Lovecraft"]
+        ["Je te présente…","Mee-ta…","anglais « meet » — « Ah, bello. Mee-ta James. »"],
+        ["Je suis…","Soy…","espagnol — « Bello, Dort. Soy Dick. »"],
+        ["Merci","Bank you","la version du film de « tank yu », entendue partout"],
+        ["Merci à tous","Bank you a tutti","« bank you » + italien « a tutti »"],
+        ["Merci (en chinois)","Xiè xie","chinois « xièxie », glissé à la toute fin du film"],
+        ["Santé !","Kanpai !","japonais — on trinque à deux"],
+        ["Pour le cinéma","Para le movies","espagnol + français + anglais, en une seule phrase"],
+        ["Des mots doux… gourmands","Piñata, carbonara, lasagna","la déclaration d'amour d'un Minion"],
+        ["Tchou-tchou ! / En route !","Toot toot !","le sifflet du train, répété tout le film"],
+        ["(réplique de footballeur)","Mbappé de Platini","deux légendes du foot français, en version originale !"]
       ],
-      grammar:"🎬 Le savais-tu ? Pierre Coffin écrit d'abord les répliques en anglais avant de les « minioniser », pioche des mots dans les menus de restaurants, et monte sa voix de six demi-tons. Pour ce film, il a ajusté la langue au Hollywood des années 1920. Félicitations, tu as terminé le parcours !",
+      grammar:"🎬 Le savais-tu ? Pierre Coffin écrit d'abord les répliques en anglais avant de les « minioniser », pioche des mots dans les menus de restaurants (carbonara, tikka masala…) et monte sa voix de six demi-tons. Le petit monstre du film s'appelle Goomi : c'est l'acronyme de « Gary Orkam Oliver Magma Ichabod the Deceiver » (« le Trompeur ») ! Félicitations, tu as terminé le parcours !",
       unlocksGame:null, reward:"Diplôme en vue ! +5 🍌"
     }
   ]}
@@ -726,11 +725,10 @@ const BASE_DICT = {
   "pourquoi":"por qué","où":"donde","qui":"quien","quoi":"po ka",
   "moi":"me","toi":"tu","nous":"tulaliloo","bonheur":"papagena","langue":"la lingua",
   "assieds-toi":"chasy","chaise":"chasy","équipe":"tropa","peur":"boo","rire":"he-he-he",
-  "téléphone":"teléfono","mon amour":"mi amor","merci mille fois":"shyeh-shyeh",
-  "pâtes":"carbonara","lasagnes":"lasagna","fête surprise":"pignata",
-  "footballeur":"mbappé","boulet":"casos","en route":"toot toot","klaxon":"toot toot",
-  "monstre":"goomi","monstres":"goomi goomi","cinéma":"cine-cine","film":"cine-cine",
-  "caméra":"camera-camera","vedette":"stella","star":"stella"
+  /* Film 2026 (vérifiés dans les sous-titres officiels) */
+  "je te présente":"mee-ta","je suis":"soy","merci à tous":"bank you a tutti",
+  "merci mille fois":"xiè xie","pour le cinéma":"para le movies",
+  "pâtes":"carbonara","lasagnes":"lasagna","en route":"toot toot","tchou-tchou":"toot toot"
 };
 /* Mots exclusifs : gagnés dans les mini-jeux */
 const BONUS_DICT = {
@@ -828,7 +826,7 @@ const ROT=[["Bello","bonjour"],["Poopaye","au revoir"],["Papagena","le bonheur a
 ["Pwede na?","on peut commencer ?"],["Me mé cassose","je m'en vais"],["Yakitori !","cours !"],
 ["Matoka","j'ai faim"],["Tu pues de bras","la chanson YMCA"],["Sa la ka !","comment oses-tu ?!"],
 ["Tulaliloo ti amo","nous t'aimons"],["Papagaya","beau / belle"],
-["Shyeh-shyeh","merci (le clin d'œil du film 2026)"],["Toot toot !","en route !"],["Mi amor","mon amour"]];
+["Xiè xie","merci (le clin d'œil du film 2026)"],["Toot toot !","en route !"],["Bank you a tutti","merci à tous"]];
 let ri=0;
 setInterval(()=>{
   ri=(ri+1)%ROT.length;
@@ -1121,8 +1119,8 @@ const MYSTERY=[["BANANA","La nourriture sacrée 🍌"],["GELATO","Un dessert gla
                ["BADUGA","Attention, ça va exploser ⚠️"],["COMARINO","On y dort, on y mange 🏠"],
                ["PAPAGAYA","Le plus beau des compliments ✨"],["BULAKA","Qu&rsquo;est-ce qui se passe ici ? 🤨"],
                ["MELOMO","Viens ici, ici ! 👈"],["POPADOM","La question devant le miroir 🪞"],
-               ["TELEFONO","Dring dring ! (film 2026) ☎️"],["CARBONARA","Des pâtes de star (film 2026) 🍝"],
-               ["PIGNATA","La fête surprise (film 2026) 🎊"],["GOOMI","Le monstre pas si effrayant (film 2026) 👾"]];
+               ["KANPAI","Santé ! On trinque (film 2026) 🥂"],["CARBONARA","Un mot doux… gourmand (film 2026) 🍝"],
+               ["TOOTTOOT","Le sifflet du train, en un seul mot (film 2026) 🚂"],["GOOMI","Le nom du petit monstre (film 2026) 👾"]];
 let mysWord,mysHint,mysFound,mysLives;
 function startMystery(){
   clearTimers();
@@ -1275,8 +1273,8 @@ const RUSH_POOL=[["banane","banana"],["bonjour","bello"],["au revoir","poopaye"]
   ["santé","kampai"],["chef","boss"],["maman","mama"],["fête","fiesta"],["musique","musica"],
   ["argent","moni"],["vite","rapido"],["merci","tank yu"],["danger","baduga"],["maison","comarino"],
   ["couronne","crona"],["chiot","puppy"],["cours !","yakitori"],["attends","pekang"],
-  ["bombe","bomba"],["cadeau","regalo"],["quoi ?","po ka"],["j'ai faim","matoka"],["téléphone","teléfono"],
-  ["mon amour","mi amor"],["lasagnes","lasagna"],["monstre","goomi"]];
+  ["bombe","bomba"],["cadeau","regalo"],["quoi ?","po ka"],["j'ai faim","matoka"],["je suis","soy"],
+  ["merci à tous","bank you a tutti"],["lasagnes","lasagna"],["tchou-tchou","toot toot"]];
 let rTime,rScore,rCurrent;
 function startRush(){
   clearTimers(); rTime=45; rScore=0;

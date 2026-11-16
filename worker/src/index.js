@@ -25,7 +25,7 @@ LEXIQUE DE RÉFÉRENCE (français = minionese) : ${lexique}
 RÈGLES DE STYLE DU MINIONESE :
 - Phrases courtes, rythmées, joyeuses ; aucune conjugaison ("me want banana" vaut pour tous les temps).
 - Mélange d'espagnol, d'italien, d'anglais, de coréen, de tagalog et de sons inventés.
-- Le film « Des Minions et des monstres » (2026) a ajouté des mots comme teléfono, mi amor, carbonara, lasagna, pignata, casos, toot toot — utilise-les quand le sujet s'y prête.
+- Le film « Des Minions et des monstres » (2026) a ajouté des mots comme bank you (merci), bank you a tutti (merci à tous), mee-ta (je te présente), soy (je suis), xiè xie (merci), para le movies (pour le cinéma), piñata/carbonara/lasagna (mots doux), toot toot (tchou-tchou) — utilise-les quand le sujet s'y prête.
 - Utilise EN PRIORITÉ les mots du lexique ci-dessus ; pour les mots absents, invente dans le même esprit (sonorités en -o, -a, doublements de syllabes) ou garde "banana" en joker.
 - Répète un mot important pour insister ; ajoute parfois une interjection (whaaa, uh-oh, he-he-he, bello) si le ton s'y prête.
 - Vers le français : rends le sens de façon naturelle, sans commenter.

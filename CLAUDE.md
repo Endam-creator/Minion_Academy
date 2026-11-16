@@ -47,12 +47,13 @@ Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GA
 ## Règles de contenu
 
 - **Chaque mot ajouté a une source** (film, interview de Pierre Coffin, page Fandom), notée dans la colonne « origine ». On n'invente pas de vocabulaire présenté comme officiel.
-- Leçon 13 (« Des Minions et des monstres », 2026) : sont confirmés le cadre (Hollywood des années 1920), le trio James / Henry / Ed, et les mots « Mbappé », « casos », « toot toot ».
-  **À revérifier** : « Goomi », « shyeh-shyeh », « Gran Jefe » et les autres mots VF de la leçon.
+- Leçon 13 (« Des Minions et des monstres », 2026) : vérifiée le 16/11/2026. Tout le vocabulaire vient des sous-titres anglais officiels du film
+  (bank you, bank you a tutti, mee-ta, soy, xiè xie, kanpai, para le movies, piñata / carbonara / lasagna, toot toot, « Mbappé de Platini »).
+  Faits confirmés : Hollywood 1927, trio James / Henry / Ed (Ed parle en langue des signes), monstre Goomi (acronyme de « Gary Orkam Oliver Magma Ichabod the Deceiver »),
+  « xiè xie » glissé à la fin (Variety). Retirés car introuvables dans le film : teléfono, mi amor, casos, pignata ; « Gran Jefe » existe mais vient d'un doublage latino-américain antérieur.
 - Propriété intellectuelle : aucune image, aucun logo ni extrait officiel (emojis et CSS uniquement). La mention « site de fan non officiel » en bas de page reste en place. Pas de monétisation sous la marque Minions.
 
 ## Pistes (par priorité)
 
-1. Revérifier le vocabulaire de la leçon 13 marqué ci-dessus.
-2. Jeu « Duel » contre l'IA, via le même Worker (ajouter une route dédiée plutôt que d'ouvrir `/translate`).
-3. PWA (manifest + icône) pour l'usage mobile. Pas d'app native.
+1. Jeu « Duel » contre l'IA, via le même Worker (ajouter une route dédiée plutôt que d'ouvrir `/translate`).
+2. PWA (manifest + icône) pour l'usage mobile. Pas d'app native.
