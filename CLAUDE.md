@@ -26,7 +26,7 @@ Pour tester le traducteur IA en local, remplacer temporairement `TRANSLATE_API` 
 
 Les trois blocs `<script>` partagent des variables globales et doivent rester dans cet ordre.
 
-1. **Données et état** : `state` (bananes, leçons faites, jeux faits, mots bonus débloqués), `LEVELS` (3 niveaux, 13 leçons), `ALL_LESSONS`, `BASE_DICT` (~140 entrées FR → Minionese), `BONUS_DICT` (mots débloqués par les jeux), `GAMES`, `RANKS`, `BADGES`.
+1. **Données et état** : `state` (bananes, leçons faites, jeux faits, mots bonus débloqués), `LEVELS` (3 niveaux, 13 leçons), `ALL_LESSONS`, `BASE_DICT` (~130 entrées FR → Minionese, mêmes règles que les leçons), `BONUS_DICT` (mots bonus inventés pour l'Académie, débloqués par les jeux et signalés comme inventés), `GAMES`, `RANKS`, `BADGES`.
 2. **Navigation, leçons et jeux** : `go()`, `renderLessons()`, `finishLesson()`, puis un couple `startX / endX` par jeu.
 3. **Traducteur, dictionnaire, progrès, sauvegarde** : `localTranslate()`, `aiTranslate()` (appelle le Worker), `translateText()` (repli automatique sur le local), `autoSave()` / `autoLoad()` (localStorage, clé `minionese-academy-v1`, appelés après chaque changement de progression), `exportSave()` / `importSave()` (code JSON en base64 pour changer d'appareil), `resetProgress()` (remise à zéro en deux clics).
 
@@ -34,7 +34,8 @@ Format d'une leçon : `{id, emoji, title, intro, vocab:[[français, minionese, o
 
 ## Jeux (clé → débloqué par)
 
-`quiz` L1 · `flash` L2 · `match` L3 · `memory` L4 · `mystery` L5 · `builder` (phrases à reconstruire) L6 · `tf` (vrai/faux) L7 · `rush` L8.
+`quiz` L1 · `flash` L2 · `match` L3 · `memory` L5 · `mystery` L6 · `builder` (phrases à reconstruire) L8 · `tf` (vrai/faux) L9 · `rush` L11 (champ `needLesson` de `GAMES`).
+Données des jeux : `FLASH`, `MATCH_ALL`, `MEMORY_ALL`, `MYSTERY` (lettres A-Z uniquement), `SENTENCES`, `RUSH_POOL` ; le quiz et le vrai/faux puisent dans le vocabulaire des leçons.
 Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GAMES`, le déblocage dans `LEVELS`, les badges et le texte « 8 mini-jeux » de la page.
 
 ## Traducteur IA
@@ -46,7 +47,14 @@ Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GA
 
 ## Règles de contenu
 
-- **Chaque mot ajouté a une source** (film, interview de Pierre Coffin, page Fandom), notée dans la colonne « origine ». On n'invente pas de vocabulaire présenté comme officiel.
+- **Chaque mot a une source**, notée dans la colonne « origine » (audit complet le 16/11/2026) :
+  - `✔ …` = entendu dans les films (sous-titres officiels), cité par Pierre Coffin (Variety, 2026) ou présent dans la liste de référence reprise par la presse
+    (bello, poopaye, tank yu, bi-do, pwede na, para tu, sa la ka, tatata bala tu, underwear, luk at tu, tulaliloo ti amo, hana/dul/sae, bapple, gelato,
+    buttom, chasy, kampai, bee do, muak, la boda, stupa, baboi/papoy, bananonina, po ka, bu ta na ma ka) ;
+  - `emprunt à …` = vrai mot d'une autre langue (por favor, fiesta, piccolo…), présenté comme tel.
+  - **Interdit** : les mots des wikis de fiction (« fanon ») et toute étymologie inventée. Retirés lors de l'audit : ma twat, bulaka, flavuk, popadom, melomo,
+    pekang, naje, kam-nen, yakitori (« cours »), baduga, comarino, crona, trabaho, molla, papagaya, papagena, loka, sella, matoka, profiterol, xylopo, etc.
+  - Les mots bonus (`BONUS_DICT`) sont volontairement inventés et doivent rester signalés comme tels.
 - Leçon 13 (« Des Minions et des monstres », 2026) : vérifiée le 16/11/2026. Tout le vocabulaire vient des sous-titres anglais officiels du film
   (bank you, bank you a tutti, mee-ta, soy, xiè xie, kanpai, para le movies, piñata / carbonara / lasagna, toot toot, « Mbappé de Platini »).
   Faits confirmés : Hollywood 1927, trio James / Henry / Ed (Ed parle en langue des signes), monstre Goomi (acronyme de « Gary Orkam Oliver Magma Ichabod the Deceiver »),
