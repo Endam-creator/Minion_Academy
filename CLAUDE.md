@@ -54,11 +54,15 @@ Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GA
   - `emprunt à …` = vrai mot d'une autre langue (por favor, fiesta, piccolo…), présenté comme tel.
   - **Interdit** : les mots des wikis de fiction (« fanon ») et toute étymologie inventée. Retirés lors de l'audit : ma twat, bulaka, flavuk, popadom, melomo,
     pekang, naje, kam-nen, yakitori (« cours »), baduga, comarino, crona, trabaho, molla, papagaya, papagena, loka, sella, matoka, profiterol, xylopo, etc.
+  - Source principale des ajouts du 16/11/2026 : les sous-titres anglais officiels de « Moi, moche et méchant 4 » (helpa, pusha, stoppa, looka, yummos, no problemo,
+    all is goot, perfecto, tu le besta / stronga, porque meo, scusa, yippa, smoocha, ciao bellos, tiramisu, prosciutto, strudel, pomodoro…), des « Minions 2 »
+    (bye-bye, pank you, come-ay, look-a the map-a, la casa, la stone-a, la telefono, mi amor, chica, Mini-Boss, trey ticket-as…) et du film de 2026.
+    L'origine de chaque mot cite le film. La règle « -a » (helpa, pusha) et l'article « le » universel sont observés dans ces sous-titres (leçon 11).
   - Les mots bonus (`BONUS_DICT`) sont volontairement inventés et doivent rester signalés comme tels.
 - Leçon 13 (« Des Minions et des monstres », 2026) : vérifiée le 16/11/2026. Tout le vocabulaire vient des sous-titres anglais officiels du film
   (bank you, bank you a tutti, mee-ta, soy, xiè xie, kanpai, para le movies, piñata / carbonara / lasagna, toot toot, « Mbappé de Platini »).
   Faits confirmés : Hollywood 1927, trio James / Henry / Ed (Ed parle en langue des signes), monstre Goomi (acronyme de « Gary Orkam Oliver Magma Ichabod the Deceiver »),
-  « xiè xie » glissé à la fin (Variety). Retirés car introuvables dans le film : teléfono, mi amor, casos, pignata ; « Gran Jefe » existe mais vient d'un doublage latino-américain antérieur.
+  « xiè xie » glissé à la fin (Variety). Retirés de la leçon 13 car absents de ce film : casos, pignata, et teléfono / mi amor (ces deux-là viennent en réalité des « Minions 2 » et sont enseignés leçons 4 et 10) ; « Gran Jefe » vient d'un doublage latino-américain antérieur (leçon 10).
 - Propriété intellectuelle : aucune image, aucun logo ni extrait officiel (emojis et CSS uniquement). La mention « site de fan non officiel » en bas de page reste en place. Pas de monétisation sous la marque Minions.
 
 ## Pistes (par priorité)

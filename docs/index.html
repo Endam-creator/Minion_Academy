@@ -314,7 +314,7 @@ button.bad{background:var(--rouge)!important;color:#fff!important}
     <div class="portal-card">
       <span class="emoji">🔁</span>
       <h3>Le Traducteur</h3>
-      <p>Près de 90 mots, tous vérifiés dans les films ou auprès de Pierre Coffin, ou empruntés à de vraies langues. Plus des mots bonus à gagner en jeu.</p>
+      <p>Environ 140 mots et expressions, tous vérifiés dans les films ou auprès de Pierre Coffin, ou empruntés à de vraies langues. Plus des mots bonus à gagner en jeu.</p>
       <button class="btn btn-dark btn-sm" onclick="go('traducteur')">Traduire</button>
     </div>
     <div class="portal-card">
@@ -448,11 +448,16 @@ const LEVELS = [
       vocab:[
         ["Bonjour / Salut","Bello","✔ le mot n°1 des Minions (italien « bello »)"],
         ["Au revoir","Poopaye","✔ « bye-bye » à la sauce minion"],
+        ["Au revoir (version courte)","Bye-bye","✔ « Les Minions 2 »"],
+        ["Salut ! (et à plus)","Ciao !","✔ « Moi, moche et méchant 4 », italien"],
+        ["Salut tout le monde !","Ciao, bellos !","✔ « Moi, moche et méchant 4 »"],
+        ["Bonne nuit","Bood night","✔ le film de 2026 : « good night » avec un B"],
         ["Merci","Tank yu","✔ anglais « thank you »"],
         ["Merci (autres versions)","Pank you / Bank you","✔ entendus dans « Les Minions 2 » et le film de 2026"],
         ["Merci beaucoup","Merci beaucoup","✔ en français dans « Moi, moche et méchant 4 »"],
-        ["S'il te plaît","Por favor","emprunt à l'espagnol"],
-        ["Oui","Si","emprunt à l'espagnol et à l'italien"],
+        ["S'il te plaît","Por favor","✔ « Les Minions 2 » (emprunt à l'espagnol)"],
+        ["S'il te plaît (version allemande)","Bitte, bitte","✔ le film de 2026, allemand"],
+        ["Oui","Si","✔ « Si, boss ! » dans « Moi, moche et méchant 4 »"],
         ["Non","No","emprunt universel"]
       ],
       grammar:"📐 Règle n°1 : le Minionese emprunte à plein de langues (anglais, espagnol, italien, français, japonais, coréen, tagalog…) et déforme les mots pour les rendre rigolos. Dans cette académie, ✔ signale un mot entendu dans les films ou confirmé par Pierre Coffin, et « emprunt » un vrai mot d'une autre langue que les Minions adorent mélanger.",
@@ -467,10 +472,18 @@ const LEVELS = [
         ["Glace","Gelato","✔ italien"],
         ["J'ai faim","Me want banana","✔ littéralement « moi vouloir banane »"],
         ["Miam !","Yum yum !","✔ entendu dans « Les Minions » (2015)"],
+        ["Délicieux !","Yummos !","✔ « Moi, moche et méchant 4 »"],
+        ["Tomate ! (cri de joie)","Pomodoro !","✔ « Moi, moche et méchant 4 », italien"],
         ["Santé ! (trinquer)","Kampai","✔ japonais « kanpai »"],
         ["Le poulet à l'indienne","Tikka masala","✔ Pierre Coffin pioche dans les menus de restaurants"],
         ["Le dessert italien","Panna cotta","✔ l'un des tout premiers mots de Pierre Coffin"],
-        ["Le riz sauté indonésien","Nasi goreng","✔ encore un plat devenu du Minionese"]
+        ["Le riz sauté indonésien","Nasi goreng","✔ encore un plat devenu du Minionese"],
+        ["Le tiramisu","Tiramisu","✔ « Moi, moche et méchant 4 »"],
+        ["Le jambon italien","Prosciutto","✔ « Moi, moche et méchant 4 »"],
+        ["Le strudel aux pommes","Strudel","✔ « Moi, moche et méchant 4 »"],
+        ["Le tapioca","Tapioca ?","✔ le film de 2026"],
+        ["La mangue","La mango","✔ le film de 2026 : « Y polenta, la mango »"],
+        ["Le scone","Le scone","✔ « Les Minions 2 »"]
       ],
       grammar:"📐 Règle n°2 : Pierre Coffin glisse des noms de plats partout, parce qu'ils sonnent bien. Si un mot te manque, un nom de plat fera l'affaire. Et devant une assiette, « yum yum ! » est toujours correct.",
       unlocksGame:"flash", reward:"Débloque les Flashcards 🃏"
@@ -482,6 +495,7 @@ const LEVELS = [
         ["Un","Hana","✔ coréen"],
         ["Deux","Dul","✔ coréen"],
         ["Trois","Sae","✔ coréen"],
+        ["Trois (autre version)","Trey","✔ « Les Minions 2 » : « Trey ticket-as »"],
         ["Quatre","Net","coréen (logique, mais jamais entendu dans les films)"],
         ["Cinq","Dasot","coréen (même remarque)"],
         ["Beaucoup","Mucho","emprunt à l'espagnol"]
@@ -496,6 +510,12 @@ const LEVELS = [
         ["Je t'aime / On t'aime","Tulaliloo ti amo","✔ italien « ti amo », cité par Pierre Coffin"],
         ["Pardon / Désolé","Bi-do","✔ l'excuse officielle"],
         ["Gros bisous","Muak muak muak","✔ le bruit du bisou"],
+        ["Un bisou","Smoocha / Smoochie","✔ « Moi, moche et méchant 4 » et « Les Minions 2 »"],
+        ["Mon amour","Mi amor","✔ « Les Minions 2 », espagnol"],
+        ["Oh là là !","Ooh la la !","✔ « Moi, moche et méchant 4 », du français"],
+        ["Trop mignon !","Holy kawaii !","✔ le film de 2026, anglais + japonais"],
+        ["Youpi !","Yippa !","✔ « Moi, moche et méchant 4 »"],
+        ["Pardon (version italienne)","Scusa","✔ « Moi, moche et méchant 4 »"],
         ["Comment oses-tu ?!","Sa la ka !","✔ indignation suprême"],
         ["Je te déteste !","Tatata bala tu","✔ à réserver aux disputes de récré"]
       ],
@@ -514,9 +534,13 @@ const LEVELS = [
         ["Maman","Mama","universel"],
         ["Papa","Papa","universel"],
         ["Bébé","Bebe","emprunt à l'espagnol"],
+        ["Le bébé","Le baby","✔ « Moi, moche et méchant 4 »"],
+        ["La fille","Chica","✔ « Bello, chica ! » dans « Les Minions 2 »"],
         ["Chiot","Puppy","emprunt à l'anglais"],
         ["Le jouet","Papoy / Baboi","✔ la prononciation varie selon les oreilles"],
-        ["L'ours en peluche de Bob","Tim","✔ « Les Minions » (2015)"]
+        ["L'ours en peluche de Bob","Tim","✔ « Les Minions » (2015)"],
+        ["Le petit chef (Gru enfant)","Mini-Boss","✔ « Les Minions 2 »"],
+        ["Le Minion","Le Minion","✔ « Les Minions 2 »"]
       ],
       grammar:"📐 Le savais-tu ? Bob, le plus petit des trois héros des « Minions » (2015), ne se sépare jamais de Tim, son ours en peluche. Un Minion sans son papoy est un Minion triste.",
       unlocksGame:"memory", reward:"Débloque le Memory 🧠"
@@ -530,7 +554,11 @@ const LEVELS = [
         ["Ça va ? / Quoi de neuf ?","Que pasa ?","emprunt à l'espagnol"],
         ["Pourquoi ?","Por qué ?","emprunt à l'espagnol"],
         ["Où ?","Donde ?","emprunt à l'espagnol"],
-        ["Qui ?","Quien ?","emprunt à l'espagnol"]
+        ["Qui ?","Quien ?","emprunt à l'espagnol"],
+        ["Ça te plaît ?","¿Te gusta ?","✔ le film de 2026, espagnol"],
+        ["Pour moi ?","¿Para mí ?","✔ le film de 2026"],
+        ["Pourquoi moi ?","Porque meo ?","✔ « Moi, moche et méchant 4 »"],
+        ["Allô ? (au téléphone)","Bello ?","✔ « Les Minions 2 »"]
       ],
       grammar:"📐 Règle n°6 : pour poser une question, monte la voix à la fin. Très haut. Encore plus haut que ça. Voilà, parfait.",
       unlocksGame:"mystery", reward:"Débloque le Mot mystère 🔤"
@@ -542,7 +570,13 @@ const LEVELS = [
         ["Regarde-toi !","Luk at tu","✔ anglais « look at you »"],
         ["Regarde !","Looka !","✔ entendu dans « Moi, moche et méchant 4 »"],
         ["Je veux","Me want","✔ anglais simplifié"],
-        ["Stop ! Arrête !","Stupa !","✔ on entend aussi « stoppa »"],
+        ["Stop ! Arrête !","Stupa !","✔ on entend surtout « stoppa » dans « Moi, moche et méchant 4 »"],
+        ["Pousse !","Pusha !","✔ « Moi, moche et méchant 4 »"],
+        ["À l'aide !","Helpa !","✔ « Moi, moche et méchant 4 » et le film de 2026"],
+        ["Viens ici !","Come-ay !","✔ « Les Minions 2 »"],
+        ["Regarde la carte !","Look-a the map-a !","✔ « Les Minions 2 »"],
+        ["Faire (un film…)","Maka","✔ « Maka la movie ! » dans le film de 2026"],
+        ["Tu peux le faire !","Tu le do it !","✔ « Moi, moche et méchant 4 »"],
         ["La chaise / Assieds-toi","Chasy","✔ de l'anglais « chair »"],
         ["Vas-y !","Anda !","emprunt à l'espagnol"]
       ],
@@ -557,7 +591,12 @@ const LEVELS = [
         ["Oh oh…","Uh-oh","onomatopée universelle, juste après une bêtise"],
         ["Vers l'infini et au-delà !","Bu ta na ma ka !","✔ clin d'œil à Buzz l'Éclair"],
         ["Bravo !","Bravo !","✔ entendu dans le film de 2026"],
-        ["Le chant de victoire","Kumbaya !","✔ chanté dans « Les Minions » (2015)"]
+        ["Le chant de victoire","Kumbaya !","✔ chanté dans « Les Minions » (2015)"],
+        ["Ça suffit !","Bas enough !","✔ « Moi, moche et méchant 4 »"],
+        ["Très risqué","Muy risky","✔ « Moi, moche et méchant 4 »"],
+        ["Pas de problème","No problemo","✔ « Moi, moche et méchant 4 »"],
+        ["Tout va bien","All is goot","✔ « Moi, moche et méchant 4 »"],
+        ["Parfait !","Perfecto !","✔ « Moi, moche et méchant 4 »"]
       ],
       grammar:"📐 Règle n°8 : répéter deux fois pour insister, trois fois pour l'urgence absolue. « Bee do » chuchoté = petite inquiétude. « BEE DO BEE DO BEE DO » = évacuation générale.",
       unlocksGame:"builder", reward:"Débloque le Constructeur de phrases 🧱"
@@ -584,12 +623,18 @@ const LEVELS = [
       intro:"Servir un maître maléfique est un métier exigeant. Voici le vocabulaire professionnel indispensable.",
       vocab:[
         ["Chef / Patron","Boss","✔ anglais"],
+        ["Oui, chef !","Si, boss !","✔ « Moi, moche et méchant 4 »"],
+        ["Le grand chef !","Big Boss !","✔ « Les Minions » (2015) et le film de 2026"],
         ["Le grand patron (version latino)","Gran Jefe","✔ « Big Boss » adapté pour l'Amérique latine"],
         ["Le plan","Plan","universel (les plans ratent dans toutes les langues)"],
         ["L'argent","Moni","emprunt à l'anglais « money »"],
         ["Pour toi","Para tu","✔ espagnol simplifié, cité par Pierre Coffin"],
         ["Vite, au travail !","Presto","emprunt à l'italien"],
-        ["Le derrière","Buttom","✔ de « bottom » — humour minion niveau 1"]
+        ["Le derrière","Buttom","✔ de « bottom » — humour minion niveau 1"],
+        ["La maison","La casa","✔ « Les Minions 2 » : « La casa de Mini-Boss »"],
+        ["La pierre","La stone-a","✔ « Les Minions 2 »"],
+        ["Le téléphone","La telefono","✔ « Les Minions 2 »"],
+        ["Trois billets pour San Francisco","Trey ticket-as por San Pan-pisco","✔ « Les Minions 2 » — l'aventure commence !"]
       ],
       grammar:"📐 Règle n°10 : face au boss, phrases courtes et grands yeux innocents. « Si boss ! No boss ! Bi-do boss ! » couvre presque toutes les situations professionnelles.",
       unlocksGame:null, reward:"+3 🍌"
@@ -603,9 +648,12 @@ const LEVELS = [
         ["Petit","Piccolo","emprunt à l'italien"],
         ["Vite","Rapido","emprunt à l'espagnol"],
         ["Un peu","Poco","emprunt à l'italien et à l'espagnol"],
-        ["Joli","Bonito","emprunt à l'espagnol"]
+        ["Joli","Bonito","emprunt à l'espagnol"],
+        ["Belle","Bella","✔ « Bella la monstra » dans le film de 2026"],
+        ["Tu es le plus fort !","Tu le stronga !","✔ « Moi, moche et méchant 4 »"],
+        ["Tu es le meilleur !","Tu le besta !","✔ « Moi, moche et méchant 4 »"]
       ],
-      grammar:"📐 Les 3 règles d'or : ① On répète pour insister (« bee do bee do », « muak muak muak »). ② On mélange les langues dans la même phrase : « Bank you a tutti » = anglais + italien. ③ La mélodie compte plus que les mots : selon Pierre Coffin, c'est elle qui dit si c'est une question ou une insulte.",
+      grammar:"📐 Les 3 règles d'or (vérifiées dans les films) : ① On ajoute « -a » aux mots anglais : help → helpa, push → pusha, stop → stoppa, map → map-a. ② « Le » sert d'article à tout : le baby, le scone, le movies… et même « tu le besta ! » (tu es le meilleur). ③ On répète pour insister (« bee do bee do », « muak muak muak ») et on mélange les langues dans la même phrase (« Bank you a tutti »).",
       unlocksGame:"rush", reward:"Débloque le Banana Rush ⌨️"
     },
     {
@@ -634,6 +682,10 @@ const LEVELS = [
         ["Merci (en chinois)","Xiè xie","✔ chinois « xièxie », glissé à la toute fin du film"],
         ["Santé !","Kanpai !","✔ japonais — on trinque à deux"],
         ["Pour le cinéma","Para le movies","✔ espagnol + français + anglais, en une seule phrase"],
+        ["Faire le film !","Maka la movie !","✔ entendu dans le film"],
+        ["Mon livre","Me booka","✔ « Look at me booka » (regarde mon livre)"],
+        ["Le monstre","La monstra","✔ « Un movie de Minions. Con monstras. »"],
+        ["C'est mon film !","C'est me movie !","✔ entendu dans le film"],
         ["Des mots doux… gourmands","Piñata, carbonara, lasagna","✔ la déclaration d'amour d'un Minion"],
         ["Tchou-tchou ! / En route !","Toot toot !","✔ le sifflet du train, répété tout le film"],
         ["(réplique de footballeur)","Mbappé de Platini","✔ deux légendes du foot français, en version originale !"]
@@ -653,7 +705,7 @@ const BASE_DICT = {
   "s'il te plaît":"por favor","s'il vous plaît":"por favor",
   "merci beaucoup":"merci beaucoup","merci à tous":"bank you a tutti","merci mille fois":"xiè xie",
   "au revoir":"poopaye","à bientôt":"poopaye","à plus":"poopaye",
-  "je le jure":"underwear","gros bisous":"muak muak muak","bisous":"muak muak","bisou":"muak",
+  "je le jure":"underwear","gros bisous":"muak muak muak","bisous":"muak muak",
   "au feu":"bee do bee do","je te déteste":"tatata bala tu","comment oses-tu":"sa la ka",
   "vers l'infini et au-delà":"bu ta na ma ka","on a gagné":"kumbaya",
   "comment ça va":"que pasa","comment vas-tu":"que pasa","comment allez-vous":"que pasa",
@@ -663,11 +715,21 @@ const BASE_DICT = {
   "le grand chef":"gran jefe","le grand patron":"gran jefe","vite vite":"rapido rapido",
   "je te présente":"mee-ta","je suis":"soy","pour le cinéma":"para le movies",
   "et puis c'est tout":"et pis c'est tout","en route":"toot toot",
+  /* Ajouts du 16/11/2026 (sous-titres officiels) */
+  "salut tout le monde":"ciao, bellos","bonne nuit":"bood night","ça te plaît":"¿te gusta","pour moi":"¿para mí",
+  "pourquoi moi":"porque meo","à l'aide":"helpa","viens ici":"come-ay","tu peux le faire":"tu le do it",
+  "ça suffit":"bas enough","pas de problème":"no problemo","tout va bien":"all is goot","trop mignon":"holy kawaii",
+  "tu es le meilleur":"tu le besta","tu es le plus fort":"tu le stronga","oui chef":"si, boss","mon amour":"mi amor",
+  "oh là là":"ooh la la","c'est mon film":"c'est me movie","faire le film":"maka la movie",
+  "aide":"helpa","pousse":"pusha","viens":"come-ay","parfait":"perfecto","youpi":"yippa","bisou":"smoocha",
+  "délicieux":"yummos","tomate":"pomodoro","tiramisu":"tiramisu","jambon":"prosciutto","mangue":"la mango",
+  "maison":"la casa","téléphone":"la telefono","pierre":"la stone-a","carte":"la map-a","livre":"booka",
+  "monstre":"la monstra","film":"le movie","fille":"chica","belle":"bella","risqué":"risky","ciao":"ciao",
   /* — mots simples — */
   "bonjour":"bello","salut":"bello","coucou":"bello","hello":"bello","hey":"bello",
   "bonsoir":"bello","bienvenue":"bello bello","merci":"tank yu",
   "banane":"banana","bananes":"banana banana","pomme":"bapple","pommes":"bapple bapple",
-  "glace":"gelato","glaces":"gelato","miam":"yum yum","délicieux":"yum yum","santé":"kampai",
+  "glace":"gelato","glaces":"gelato","miam":"yum yum","santé":"kampai",
   "crêpe":"pancake","crêpes":"pancake","pâtes":"carbonara","lasagnes":"lasagna","riz":"nasi goreng",
   "jouet":"papoy","jouets":"papoy papoy","peluche":"tim","nounours":"tim",
   "oui":"si","non":"no","stop":"stupa","arrête":"stupa","regarde":"looka","vas-y":"anda",
@@ -953,7 +1015,8 @@ function endQuiz(){
 const FLASH=[["Banana","Banane 🍌"],["Gelato","Glace 🍨"],["Poopaye","Au revoir 👋"],["Tank yu","Merci 🙏"],
              ["Papoy","Jouet 🧸"],["Bello","Bonjour 😀"],["Kampai","Santé ! 🥂"],["Bapple","Pomme 🍎"],
              ["Yum yum !","Miam ! 🤤"],["Bi-do","Pardon 🙇"],["Bee do bee do","Au feu ! 🚒"],["Bananonina","Moche 🙈"],
-             ["Stupa !","Stop ! 🛑"],["Po ka ?","Quoi ? 🤨"],["Muak muak","Bisous 😘"],["La boda","Mariage 💍"]];
+             ["Stupa !","Stop ! 🛑"],["Po ka ?","Quoi ? 🤨"],["Muak muak","Bisous 😘"],["La boda","Mariage 💍"],
+             ["Helpa !","À l&rsquo;aide ! 🆘"],["Tu le besta !","Tu es le meilleur ! 🏆"],["No problemo","Pas de problème 👌"],["Mi amor","Mon amour 💛"]];
 let fIdx,fKnown,fDeck;
 function startFlash(){
   clearTimers(); fIdx=0; fKnown=0; fDeck=[...FLASH].sort(()=>Math.random()-.5).slice(0,8);
@@ -1075,7 +1138,9 @@ const MYSTERY=[["BANANA","La nourriture sacrée 🍌"],["GELATO","Un dessert gla
                ["TULALILOO","Le début de « je t&rsquo;aime » 💛"],["STUPA","Stop ! 🛑"],
                ["KUMBAYA","Le chant de victoire 🎶"],["PANCAKE","L&rsquo;un des tout premiers mots de Pierre Coffin 🥞"],
                ["KANPAI","Santé ! On trinque (film 2026) 🥂"],["CARBONARA","Un mot doux… gourmand (film 2026) 🍝"],
-               ["TOOTTOOT","Le sifflet du train, en un seul mot (film 2026) 🚂"],["GOOMI","Le nom du petit monstre (film 2026) 👾"]];
+               ["TOOTTOOT","Le sifflet du train, en un seul mot (film 2026) 🚂"],["GOOMI","Le nom du petit monstre (film 2026) 👾"],
+               ["HELPA","À l&rsquo;aide ! 🆘"],["TIRAMISU","Un dessert italien que les Minions adorent 🍰"],
+               ["POMODORO","Une tomate… et un cri de joie 🍅"],["PERFECTO","Parfait ! 👌"],["TAPIOCA","Une petite perle gourmande (film 2026) 🧋"]];
 let mysWord,mysHint,mysFound,mysLives;
 function startMystery(){
   clearTimers();
@@ -1124,7 +1189,9 @@ const SENTENCES=[
   {fr:"Regarde ! Un, deux, trois !", words:["looka","hana","dul","sae"]},
   {fr:"Pardon chef, je le jure !", words:["bi-do","boss","underwear"]},
   {fr:"Quoi ? On peut commencer ?", words:["po","ka","pwede","na"]},
-  {fr:"Merci à tous, en route !", words:["bank","you","a","tutti","toot","toot"]}
+  {fr:"Merci à tous, en route !", words:["bank","you","a","tutti","toot","toot"]},
+  {fr:"Tu es le meilleur, pas de problème !", words:["tu","le","besta","no","problemo"]},
+  {fr:"Trois billets pour San Francisco !", words:["trey","ticket-as","por","san","pan-pisco"]}
 ];
 let bRounds,bIdx,bScore,bTarget,bPool;
 function startBuilder(){
@@ -1229,7 +1296,9 @@ const RUSH_POOL=[["banane","banana"],["bonjour","bello"],["au revoir","poopaye"]
   ["vite","rapido"],["merci","tank yu"],["pardon","bi-do"],["quoi ?","po ka"],["chaise","chasy"],
   ["chiot","puppy"],["cadeau","regalo"],["mariage","la boda"],["moche","bananonina"],
   ["un","hana"],["deux","dul"],["trois","sae"],["je suis","soy"],
-  ["merci à tous","bank you a tutti"],["lasagnes","lasagna"],["tchou-tchou","toot toot"]];
+  ["merci à tous","bank you a tutti"],["lasagnes","lasagna"],["tchou-tchou","toot toot"],
+  ["à l'aide","helpa"],["pousse","pusha"],["parfait","perfecto"],["youpi","yippa"],["tomate","pomodoro"],
+  ["mon amour","mi amor"],["maison","la casa"],["bonne nuit","bood night"]];
 let rTime,rScore,rCurrent;
 function startRush(){
   clearTimers(); rTime=45; rScore=0;
@@ -1322,16 +1391,15 @@ function localTranslate(input){
     });
   }
   pairs.sort((a,b)=>b[0].length-a[0].length);
-  let text=input;
-  pairs.forEach(([from,to])=>{
-    const esc=from.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
-    const re=new RegExp("(^|[^\\p{L}])("+esc+")(?=[^\\p{L}]|$)","giu");
-    text=text.replace(re,(all,pre,word)=>{
-      let rep=to;
-      if(word[0]===word[0].toUpperCase()&&word[0]!==word[0].toLowerCase())
-        rep=rep[0].toUpperCase()+rep.slice(1);
-      return pre+rep;
-    });
+  /* Une seule passe : un mot déjà traduit n'est jamais retraduit */
+  const map=new Map(pairs.map(([from,to])=>[from.toLowerCase(),to]));
+  const alt=pairs.map(([from])=>from.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("|");
+  const re=new RegExp("(^|[^\\p{L}])("+alt+")(?=[^\\p{L}]|$)","giu");
+  let text=input.replace(re,(all,pre,word)=>{
+    let rep=map.get(word.toLowerCase()); if(rep===undefined) return all;
+    if(word[0]===word[0].toUpperCase()&&word[0]!==word[0].toLowerCase())
+      rep=rep[0].toUpperCase()+rep.slice(1);
+    return pre+rep;
   });
   if(tradDir==="fr2mi" && !/[!?.]$/.test(text)) text+=" !";
   return text;
@@ -1392,7 +1460,9 @@ const RANDOM_SENTENCES=[
   "Je suis James, merci à tous ! En route !",
   "Regarde-toi, tu es moche ! He-he-he !",
   "Le mariage ? Oui ! Un cadeau pour toi, je le jure !",
-  "Où est mon jouet ? Merci beaucoup, au revoir !"
+  "Où est mon jouet ? Merci beaucoup, au revoir !",
+  "À l'aide ! Ça suffit ! Pas de problème, tout va bien.",
+  "Tu es le meilleur ! Oh là là, trop mignon ! Bonne nuit !"
 ];
 const MINION_SENTENCES=[
   "Bello ! Que pasa ? Me want banana, por favor !",
@@ -1401,7 +1471,9 @@ const MINION_SENTENCES=[
   "Pwede na ? Si si ! Fiesta, musica, danza !",
   "Luk at tu ! Bananonina ! He-he-he !",
   "Hana, dul, sae… Bu ta na ma ka !",
-  "Bank you a tutti ! Toot toot !"
+  "Bank you a tutti ! Toot toot !",
+  "Helpa ! Helpa ! Stoppa ! … No problemo, all is goot.",
+  "Bello, chica ! ¿Te gusta ? Tu le besta !"
 ];
 function randomSentence(){
   const pool = tradDir==="fr2mi" ? RANDOM_SENTENCES : MINION_SENTENCES;
