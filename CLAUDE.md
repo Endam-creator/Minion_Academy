@@ -38,6 +38,13 @@ Format d'une leçon : `{id, emoji, title, intro, vocab:[[français, minionese, o
 Données des jeux : `FLASH`, `MATCH_ALL`, `MEMORY_ALL`, `MYSTERY` (lettres A-Z uniquement), `SENTENCES`, `RUSH_POOL` ; le quiz et le vrai/faux puisent dans le vocabulaire des leçons.
 Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GAMES`, le déblocage dans `LEVELS`, les badges et le texte « 8 mini-jeux » de la page.
 
+## Atelier « Fabrique ton mot » (onglet Atelier)
+
+- `craftWord()` applique à un mot les règles observées dans les sous-titres : suffixe « -a » (`withA` : help → helpa, stop → stoppa, stone → stone-a, happy → happa),
+  article « le », « B » initial (`withB` : apple → bapple, thank → bank, good night → bood night, b → p comme pank you), répétition, « Tu le … ! ».
+- Chaque carte cite l'exemple réel qui prouve la règle. Les mots produits sont présentés comme « fabriqués par toi », jamais comme officiels.
+- Voix : `speakText()` (partagée avec le traducteur). Entrée utilisateur échappée (`escapeHtml`).
+
 ## Traducteur IA
 
 - Le navigateur envoie `{text, direction: "fr2mi" | "mi2fr", lexique}` au Worker, qui renvoie `{translation}`.

@@ -211,6 +211,21 @@ button.bad{background:var(--rouge)!important;color:#fff!important}
 .chip b{color:var(--denim)}
 .chip.locked{opacity:.5;border-style:dashed}
 
+/* ---------- ATELIER ---------- */
+.craft-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.craft-input{flex:1 1 220px;min-width:0;border:3px solid var(--nuit);border-radius:999px;padding:12px 20px;
+  font-family:var(--body);font-size:1.1rem;font-weight:700;background:#fffef8;color:var(--nuit)}
+button.chip{cursor:pointer;color:var(--nuit);font-family:inherit}
+button.chip:hover{background:var(--banane-clair)}
+.craft-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:20px}
+.craft-card{background:var(--nuit);color:var(--blanc);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.craft-card .rule{font-size:.78rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--banane-clair)}
+.craft-card .made{font-family:var(--display);font-size:1.7rem;color:var(--banane);line-height:1.15;overflow-wrap:anywhere}
+.craft-card .proof{font-size:.85rem;line-height:1.45;opacity:.9}
+.craft-card .proof b{color:var(--banane-clair)}
+.craft-card button{align-self:flex-start;margin-top:auto}
+.craft-empty{grid-column:1/-1;background:#efe6c2;border:2px dashed var(--nuit);border-radius:16px;padding:18px;line-height:1.5}
+
 /* ---------- PROGRÈS ---------- */
 .badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
 .badge-card{background:var(--blanc);border:3px solid var(--nuit);border-radius:var(--r);padding:16px;
@@ -264,6 +279,7 @@ button.bad{background:var(--rouge)!important;color:#fff!important}
   <button class="tab" data-page="parcours">Parcours</button>
   <button class="tab" data-page="jeux">Mini-jeux</button>
   <button class="tab" data-page="traducteur">Traducteur</button>
+  <button class="tab" data-page="atelier">Atelier</button>
   <button class="tab" data-page="progres">Progrès</button>
   <span class="banana-counter" title="Tes bananes">🍌 <span id="bananaCount">0</span></span>
 </nav>
@@ -376,9 +392,37 @@ button.bad{background:var(--rouge)!important;color:#fff!important}
   </div>
 </section>
 
+<!-- ================= ATELIER ================= -->
+<section class="page" id="page-atelier">
+  <p class="eyebrow">Étape 4 · Créer</p>
+  <h2 class="page-title">Fabrique ton mot</h2>
+  <p class="page-sub">Les Minions ne parlent pas au hasard : dans les films, ils transforment les mots avec quelques règles toutes simples. Tape un mot et l'atelier les applique pour toi. Ça marche encore mieux avec des mots anglais, comme le fait Pierre Coffin.</p>
+  <div class="translator">
+    <form class="craft-form" id="craftForm">
+      <label for="craftInput" style="font-weight:800">Ton mot :</label>
+      <div class="craft-row">
+        <input id="craftInput" class="craft-input" type="text" maxlength="24" autocomplete="off" placeholder="Ex. : jump, sleep, pizza, robot…">
+        <button class="btn btn-dark" type="submit">Fabriquer !</button>
+      </div>
+      <div class="chips" aria-label="Idées de mots">
+        <button type="button" class="chip craft-idea" data-w="jump">jump</button>
+        <button type="button" class="chip craft-idea" data-w="sleep">sleep</button>
+        <button type="button" class="chip craft-idea" data-w="dance">dance</button>
+        <button type="button" class="chip craft-idea" data-w="happy">happy</button>
+        <button type="button" class="chip craft-idea" data-w="pizza">pizza</button>
+        <button type="button" class="chip craft-idea" data-w="robot">robot</button>
+        <button type="button" class="chip craft-idea" data-w="orange">orange</button>
+        <button type="button" class="chip craft-idea" data-w="chocolat">chocolat</button>
+      </div>
+    </form>
+    <div class="craft-grid" id="craftGrid" aria-live="polite"></div>
+    <p class="note">⚠️ Ces mots sont <b>fabriqués par toi</b> avec les vraies règles des films. Ils ne sont pas officiels… mais un Minion te comprendrait sûrement !</p>
+  </div>
+</section>
+
 <!-- ================= PROGRÈS ================= -->
 <section class="page" id="page-progres">
-  <p class="eyebrow">Étape 4 · Briller</p>
+  <p class="eyebrow">Étape 5 · Briller</p>
   <h2 class="page-title">Tes Progrès</h2>
 
   <div class="stats-row">
@@ -1490,11 +1534,8 @@ function copyOutput(){
 }
 function speakOutput(){
   const t=document.getElementById("output").textContent;
-  if(!t||t.includes("apparaîtra")){ toast("Traduis d&rsquo;abord une phrase !".replace("&rsquo;","'")); return; }
-  if(!("speechSynthesis" in window)){ toast("Synthèse vocale non disponible, bi-do."); return; }
-  const u=new SpeechSynthesisUtterance(t);
-  u.lang="it-IT"; u.pitch=1.9; u.rate=1.15;
-  speechSynthesis.cancel(); speechSynthesis.speak(u);
+  if(!t||t.includes("apparaîtra")){ toast("Traduis d'abord une phrase !"); return; }
+  speakText(t);
 }
 function renderDico(){
   const wrap=document.getElementById("dicoChips");
@@ -1584,6 +1625,59 @@ function resetProgress(btn){
   renderAll();
   toast("Tout est effacé. Bello, nouveau Minion ! 🍼");
 }
+
+
+/* ================== ATELIER : FABRIQUE TON MOT ==================
+   Chaque règle est observée dans les sous-titres officiels des films. */
+const VOWELS="aeiouyàâäéèêëîïôöùûü";
+function escapeHtml(t){ return t.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function speakText(t){
+  if(!("speechSynthesis" in window)){ toast("Synthèse vocale non disponible, bi-do."); return; }
+  const u=new SpeechSynthesisUtterance(t);
+  u.lang="it-IT"; u.pitch=1.9; u.rate=1.15;
+  speechSynthesis.cancel(); speechSynthesis.speak(u);
+}
+/* Règle du « -a » : help → helpa, push → pusha, stop → stoppa, stone → stone-a */
+function withA(w){
+  const last=w.slice(-1);
+  if(last==="a") return w;
+  if(last==="y" && w.length>2) return w.slice(0,-1)+"a";   /* happy → happa (comme yippee → yippa) */
+  if(VOWELS.includes(last)) return w+"-a";
+  const cvc=w.length<=4 && !VOWELS.includes(last) && VOWELS.includes(w.slice(-2,-1)) && !VOWELS.includes(w.slice(-3,-2)||"a") && !"wxy".includes(last);
+  return cvc ? w+last+"a" : w+"a";
+}
+/* Règle du « B » : apple → bapple, thank you → bank you, good night → bood night */
+function withB(w){
+  if(w[0]==="b") return "p"+w.slice(1);          /* bank you → pank you */
+  if(VOWELS.includes(w[0])) return "b"+w;          /* apple → bapple */
+  const m=w.match(new RegExp("^[^"+VOWELS+"]+"));
+  return "b"+w.slice(m?m[0].length:0);
+}
+function craftWord(raw){
+  const grid=document.getElementById("craftGrid");
+  const w=(raw||"").trim().toLowerCase().split(/\s+/)[0].replace(/[^\p{L}'-]/gu,"");
+  if(!w){ grid.innerHTML=`<div class="craft-empty">Tape d'abord un mot (ou touche une idée ci-dessus). Bee do, bee do !</div>`; return; }
+  const a=withA(w);
+  const results=[
+    {rule:"Règle du « -a »", made:a, proof:"On ajoute « a » à la fin : <b>help → helpa</b>, <b>push → pusha</b>, <b>stop → stoppa</b> (« Moi, moche et méchant 4 »)."},
+    {rule:"Règle du « le »", made:"le "+a, proof:"« Le » va devant tout : <b>le baby</b>, <b>le scone</b>, <b>le movies</b> (« Moi, moche et méchant 4 », « Les Minions 2 », film de 2026)."},
+    {rule:"Règle du « B »", made:withB(w), proof:"On met un B au début : <b>apple → bapple</b>, <b>thank you → bank you</b>, <b>good night → bood night</b> (film de 2026)."},
+    {rule:"Répète pour insister", made:a+" "+a+" !", proof:"Deux fois pour insister, trois pour l'urgence : <b>bee do bee do</b>, <b>muak muak muak</b>."},
+    {rule:"Le compliment minion", made:"Tu le "+a+" !", proof:"Comme <b>« Tu le besta ! »</b> (tu es le meilleur) dans « Moi, moche et méchant 4 ». Idéal avec un adjectif : happy, strong…"}
+  ];
+  grid.innerHTML=results.map((r,i)=>`<article class="craft-card">
+      <span class="rule">${r.rule}</span>
+      <span class="made">${escapeHtml(r.made)}</span>
+      <p class="proof">${r.proof}</p>
+      <button type="button" class="btn btn-light btn-sm" data-say="${i}">🔊 Écouter</button>
+    </article>`).join("");
+  grid.querySelectorAll("[data-say]").forEach(b=>b.addEventListener("click",()=>speakText(results[+b.dataset.say].made)));
+}
+document.getElementById("craftForm").addEventListener("submit",e=>{ e.preventDefault(); craftWord(document.getElementById("craftInput").value); });
+document.querySelectorAll(".craft-idea").forEach(c=>c.addEventListener("click",()=>{
+  document.getElementById("craftInput").value=c.dataset.w; craftWord(c.dataset.w);
+}));
+craftWord("jump");   /* exemple affiché d'emblée */
 
 /* ================== INIT ================== */
 function renderAll(){
