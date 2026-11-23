@@ -6,17 +6,17 @@ Public : enfants et familles. Ton joyeux, zéro contenu inapproprié.
 ## Structure
 
 ```
-docs/index.html      Toute l'application (HTML + CSS + 3 blocs <script>), aucune dépendance, aucun build
+index.html           Toute l'application (HTML + CSS + 3 blocs <script>), aucune dépendance, aucun build
 worker/src/index.js  Proxy Cloudflare Worker vers l'API Claude (garde la clé, construit le prompt)
 worker/wrangler.toml Config du Worker : origines autorisées, modèle, limite de débit, domaine
 ```
 
-Hébergement : `docs/` sur GitHub Pages (dossier /docs de la branche main) (sous-domaine endam-digital.com), `worker/` sur Cloudflare.
+Hébergement : la racine du dépôt sur GitHub Pages (branche main, dossier « / (root) ») (sous-domaine endam-digital.com), `worker/` sur Cloudflare.
 
 ## Lancer en local
 
 ```bash
-cd docs && python3 -m http.server 8080          # http://localhost:8080
+python3 -m http.server 8080                 # http://localhost:8080
 cd worker && npx wrangler dev                    # proxy sur http://localhost:8787
 ```
 Pour tester le traducteur IA en local, remplacer temporairement `TRANSLATE_API` par `http://localhost:8787/translate`
@@ -48,7 +48,7 @@ Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GA
 ## Traducteur IA
 
 - Le navigateur envoie `{text, direction: "fr2mi" | "mi2fr", lexique}` au Worker, qui renvoie `{translation}`.
-- Le prompt est construit **dans le Worker**, jamais côté client. La clé API n'apparaît jamais dans `docs/`.
+- Le prompt est construit **dans le Worker**, jamais côté client. La clé API n'apparaît jamais dans `index.html`.
 - Garde-fous du Worker : origines autorisées, 500 caractères max, 10 requêtes/min/IP, `max_tokens` 400, consigne anti-injection et filtre « contenu pour enfants ».
 - Toute erreur (réseau, 429, 5xx) → le moteur local prend le relais et un toast prévient l'utilisateur.
 

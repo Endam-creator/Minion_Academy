@@ -24,10 +24,10 @@ Pense aussi à fixer une limite de dépense mensuelle dans la console Anthropic.
 
 ### 2. Le site
 
-1. Dans le dépôt : **Settings → Pages → Build and deployment → Deploy from a branch**, branche `main`, dossier `/docs`.
+1. Dans le dépôt : **Settings → Pages → Build and deployment → Deploy from a branch**, branche `main`, dossier `/ (root)`.
 2. Ajoute un domaine personnalisé, par exemple `minionese.endam-digital.com` (enregistrement CNAME vers `<ton-user>.github.io`).
 3. Vérifie que cette origine exacte figure dans `ALLOWED_ORIGINS` (`worker/wrangler.toml`), sinon ajoute-la et redéploie le Worker.
-4. Si l'URL du Worker diffère, modifie la constante `TRANSLATE_API` dans `docs/index.html`.
+4. Si l'URL du Worker diffère, modifie la constante `TRANSLATE_API` dans `index.html`.
 
 ### 3. Tester
 
