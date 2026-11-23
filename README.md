@@ -5,22 +5,18 @@ Non officiel, sans lien avec Illumination ni Universal Pictures.
 
 ## Mise en ligne
 
-### 1. Le Worker (traducteur IA)
+### 1. Le Worker (traducteur IA, gratuit)
 
-Prérequis : un compte Cloudflare avec la zone `endam-digital.com`, Node.js, une clé API Anthropic.
+Le Worker utilise **Cloudflare Workers AI** : 10 000 Neurons offerts par jour, sans carte bancaire.
+Au-delà, la requête échoue et le site bascule sur son dictionnaire local. Aucune facture possible sur le forfait gratuit.
 
-```bash
-cd worker
-npx wrangler login
-npx wrangler secret put ANTHROPIC_API_KEY     # colle la clé, elle ne quitte jamais Cloudflare
-npx wrangler deploy
-```
+Par le tableau de bord (sans terminal) :
+1. dash.cloudflare.com → **Workers & Pages** → **Create** → modèle **Hello World**, nom `minionese-api` → **Deploy**. Note l'adresse `https://minionese-api.xxxx.workers.dev`.
+2. **Edit code** : remplace tout par le contenu de `worker/src/index.js` → **Deploy**.
+3. **Settings → Bindings → Add → Workers AI**, nom de variable `AI` → **Deploy**.
+4. Mets l'adresse du Worker dans la constante `TRANSLATE_API` de `index.html` (suivie de `/translate`).
 
-Le Worker répond sur `https://minionese-api.endam-digital.com/translate`.
-Si ta zone n'est pas sur Cloudflare : supprime le bloc `routes` de `wrangler.toml`, redéploie,
-et utilise l'URL `https://minionese-api.<ton-compte>.workers.dev/translate`.
-
-Pense aussi à fixer une limite de dépense mensuelle dans la console Anthropic.
+Option payante : ajouter un secret `ANTHROPIC_API_KEY` fait passer le Worker sur Claude (meilleure qualité).
 
 ### 2. Le site
 

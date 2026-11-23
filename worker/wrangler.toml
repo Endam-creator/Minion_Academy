@@ -7,6 +7,10 @@ routes = [
   { pattern = "minionese-api.endam-digital.com", custom_domain = true }
 ]
 
+# IA gratuite Cloudflare (Workers AI)
+[ai]
+binding = "AI"
+
 [vars]
 # Origines autorisées à appeler le traducteur (virgules, sans slash final)
 ALLOWED_ORIGINS = "https://minionese.endam-digital.com,https://endam-creator.github.io,http://localhost:8080"

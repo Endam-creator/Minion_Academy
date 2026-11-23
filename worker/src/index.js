@@ -1,13 +1,20 @@
 /**
  * Minionese Academy — proxy de traduction (Cloudflare Worker)
- * Garde la clé Anthropic côté serveur, construit le prompt ici
- * (le navigateur n'envoie que le texte), limite taille et débit.
+ * Construit le prompt ici (le navigateur n'envoie que le texte), limite taille et débit.
  *
- * Secrets / variables :
- *   ANTHROPIC_API_KEY  (secret)  wrangler secret put ANTHROPIC_API_KEY
- *   ALLOWED_ORIGINS    (var)     origines autorisées, séparées par des virgules
- *   MODEL              (var)     modèle Claude utilisé
- *   LIMITER            (binding) limite de débit par IP (wrangler.toml)
+ * Deux moteurs possibles :
+ *  - GRATUIT (par défaut) : Cloudflare Workers AI, via le binding « AI ».
+ *    10 000 Neurons offerts par jour, sans carte bancaire ; au-delà, la requête échoue
+ *    et le site bascule sur son dictionnaire local.
+ *  - PAYANT (optionnel) : Claude, si le secret ANTHROPIC_API_KEY est défini.
+ *
+ * Réglages :
+ *   AI                 (binding)  Workers AI — Settings → Bindings → Add → Workers AI, nom « AI »
+ *   ANTHROPIC_API_KEY  (secret)   optionnel, active Claude à la place de Workers AI
+ *   ALLOWED_ORIGINS    (var)      origines autorisées, séparées par des virgules
+ *   MODEL              (var)      modèle Claude (si clé Anthropic)
+ *   CF_MODEL           (var)      modèle Workers AI (défaut : Llama 3.1 8B)
+ *   LIMITER            (binding)  limite de débit par IP (optionnel)
  */
 
 const MAX_TEXT = 500;       // caractères traduits par requête
@@ -63,6 +70,37 @@ function json(body, status, headers) {
   });
 }
 
+// Moteur gratuit : Cloudflare Workers AI
+async function viaWorkersAI(prompt, env) {
+  if (!env.AI) throw new Error("binding AI manquant");
+  const out = await env.AI.run(env.CF_MODEL || "@cf/meta/llama-3.1-8b-instruct", {
+    messages: [{ role: "user", content: prompt }],
+    max_tokens: 300,
+    temperature: 0.7,
+  });
+  return (out && out.response) || "";
+}
+
+// Moteur payant optionnel : Claude
+async function viaClaude(prompt, env) {
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      "x-api-key": env.ANTHROPIC_API_KEY,
+      "anthropic-version": "2023-06-01",
+    },
+    body: JSON.stringify({
+      model: env.MODEL || "claude-haiku-4-5-20251001",
+      max_tokens: 400,
+      messages: [{ role: "user", content: prompt }],
+    }),
+  });
+  if (!r.ok) throw new Error("Anthropic " + r.status + " " + (await r.text()));
+  const data = await r.json();
+  return (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n");
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -90,26 +128,17 @@ export default {
     if (!text) return json({ error: "empty_text" }, 400, cors.headers);
     if (text.length > MAX_TEXT) return json({ error: "text_too_long", max: MAX_TEXT }, 413, cors.headers);
 
-    const upstream = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": env.ANTHROPIC_API_KEY,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: env.MODEL || "claude-haiku-4-5-20251001",
-        max_tokens: 400,
-        messages: [{ role: "user", content: buildPrompt(text, direction, lexique) }],
-      }),
-    });
-
-    if (!upstream.ok) {
-      console.log("Anthropic error", upstream.status, await upstream.text());
+    const prompt = buildPrompt(text, direction, lexique);
+    let translation = "";
+    try {
+      translation = env.ANTHROPIC_API_KEY
+        ? await viaClaude(prompt, env)
+        : await viaWorkersAI(prompt, env);
+    } catch (e) {
+      console.log("Erreur moteur IA", String(e));
       return json({ error: "upstream_error" }, 502, cors.headers);
     }
-    const data = await upstream.json();
-    const translation = (data.content || []).filter(b => b.type === "text").map(b => b.text).join("\n").trim();
+    translation = translation.trim().replace(/^["«]\s*|\s*["»]$/g, "");
     if (!translation) return json({ error: "empty_response" }, 502, cors.headers);
     return json({ translation }, 200, cors.headers);
   },

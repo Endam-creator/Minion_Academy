@@ -7,7 +7,7 @@ Public : enfants et familles. Ton joyeux, zéro contenu inapproprié.
 
 ```
 index.html           Toute l'application (HTML + CSS + 3 blocs <script>), aucune dépendance, aucun build
-worker/src/index.js  Proxy Cloudflare Worker vers l'API Claude (garde la clé, construit le prompt)
+worker/src/index.js  Proxy Cloudflare Worker : Workers AI gratuit par défaut (binding AI), Claude si ANTHROPIC_API_KEY (construit le prompt)
 worker/wrangler.toml Config du Worker : origines autorisées, modèle, limite de débit, domaine
 ```
 
@@ -49,6 +49,7 @@ Les 8 jeux sont implémentés. Si on en ajoute un (ex. Duel), mettre à jour `GA
 
 - Le navigateur envoie `{text, direction: "fr2mi" | "mi2fr", lexique}` au Worker, qui renvoie `{translation}`.
 - Le prompt est construit **dans le Worker**, jamais côté client. La clé API n'apparaît jamais dans `index.html`.
+- Moteur : Cloudflare Workers AI (`@cf/meta/llama-3.1-8b-instruct`, 10 000 Neurons/jour gratuits, binding `AI`) ; Claude seulement si le secret `ANTHROPIC_API_KEY` existe.
 - Garde-fous du Worker : origines autorisées, 500 caractères max, 10 requêtes/min/IP, `max_tokens` 400, consigne anti-injection et filtre « contenu pour enfants ».
 - Toute erreur (réseau, 429, 5xx) → le moteur local prend le relais et un toast prévient l'utilisateur.
 
